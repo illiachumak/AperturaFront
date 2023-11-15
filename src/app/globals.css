@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.cdnfonts.com/css/liberation-mono');
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -8,4 +9,69 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+}
+*{
+  font-family: 'Liberation Mono', sans-serif;
+  font-size: 12px;                                            
+}
+body{
+  width: 100%;
+  background-image: url('./assets/shop/shopbg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+.select-custom{
+  height: 30px;
+  padding: 0 4px;
+}
+.custom-input{
+  border:solid 1px #EBAF5A;
+  width: 75px;
+  height: 30px;
+  font-size: 12px;
+}
+.fz-12{
+  font-size: 12px;
+}
+.fz-14{
+  font-size: 14px;
+}
+.fz-16{
+  font-size: 16px;
+}
+.h-345 {
+  height: 345px;
+}
+.h-27{
+  height: 27px;
+}
+.w-250 {
+  width: 250px;
+}
+.bg-color-prim1{
+  background: #3A2911;
+}
+.br-color-prim2{
+  border:solid 1px #EBAF5A;
+  background: transparent;
+}
+.rounded-xs{
+  border-radius: 5px;
+}
+.rounded-t-xs{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.rounded-b-xs{
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.bg-active-subcategory-prim1{
+  background: #5c421e;
+}
+.bg-active-prim1{
+  background: #846436;
 }
