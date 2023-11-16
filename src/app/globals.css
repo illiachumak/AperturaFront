@@ -3,6 +3,8 @@
 @tailwind utilities;
 @import url('https://fonts.cdnfonts.com/css/liberation-mono');
 
+
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -10,6 +12,14 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+
+html{
+  background-image: url('../../public/shopbg.jpg');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+}
+
 *{
   font-family: 'Liberation Mono', sans-serif;
   font-size: 12px;                                            
@@ -75,3 +85,4 @@ body{
 .bg-active-prim1{
   background: #846436;
 }
+
