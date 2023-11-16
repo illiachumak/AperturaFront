@@ -1,7 +1,7 @@
 import Footer from './Components/Footer'
 import Navbar from './Components/Navbar'
 import './globals.css'
-
+import ReduxProvider from './redux/Provider'
 
 
 export const metadata = {
@@ -13,10 +13,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar/>
-        {children}
+       <Navbar/>
+        <ReduxProvider>
+            {children}
+        </ReduxProvider> 
         <Footer/>
-        </body>
+      </body>
     </html>
   )
 }

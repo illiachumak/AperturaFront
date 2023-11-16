@@ -1,13 +1,19 @@
-
+"use client"
+import { useRouter } from "next/navigation"
+import { useLayoutEffect } from "react"
 /*
-    * Responsible for rendering components
-    * Responsible for fetching shop data
+    * Redirecting for actual shop page with categories
 */
-export default async function Shop() {
-      return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-          hello its shop
-        </main>
-      )
-    }
+export default function Shop() {
+  const router = useRouter()
+
+  useLayoutEffect(()=> {
+    router.push('/shop/doors')
+  },[])
+
+  return (
+    <>
+    </>
+  )
+}
     
