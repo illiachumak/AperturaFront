@@ -1,36 +1,34 @@
-"use client"
-import {useState, useEffect} from 'react'
+
 import Link from 'next/link';
 import Image from 'next/image';
 import Sidebar from '@/app/Components/Sidebar';
 import dummycardphoto from '../../assets/shop/cardDummy.jpg'
 import '../style.css'
 import ShopCardButton from '@/app/Components/Buttons/shopCardButton';
+import SortOption from '@/app/Components/Sort';
 /*
     * Responsible for rendering component
     * Responsible for fetching shop data
 */
-export default function Shop({params}) {
-  const [selectedCategory, setSelectedCategory] = useState('Shop');
-  const [sortOption, setSortOption] = useState('price');
-  const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const dummyApiCall = async () => {
-      const dummyData = [
-        { id: 1, photo: dummycardphoto, text: 'Product 1', price: 29.99 },
-        { id: 2, photo: dummycardphoto, text: 'Product 2', price: 49.99 },
-        { id: 3, photo: dummycardphoto, text: 'Product 3', price: 19.99 },
-        { id: 4, photo: dummycardphoto, text: 'Product 1', price: 29.99 },
-        { id: 5, photo: dummycardphoto, text: 'Product 2', price: 49.99 },
-        { id: 6, photo: dummycardphoto, text: 'Product 3', price: 19.99 },
-      ];
+ export async function fetchShop(category) {
+  let dummyData = [
+    { id: 1, photo: dummycardphoto, text: 'Product 1', price: 29.99 },
+    { id: 2, photo: dummycardphoto, text: 'Product 2', price: 49.99 },
+    { id: 3, photo: dummycardphoto, text: 'Product 3', price: 19.99 },
+    { id: 4, photo: dummycardphoto, text: 'Product 1', price: 29.99 },
+    { id: 5, photo: dummycardphoto, text: 'Product 2', price: 49.99 },
+    { id: 6, photo: dummycardphoto, text: 'Product 3', price: 19.99 },
+  ];
 
-      setProducts(dummyData);
-    };
+ 
+    //const data= await fetch(`base_url/api/${category}`)
+    return dummyData
+ }
 
-    dummyApiCall();
-  }, []);
+export default async function Shop({params}) {
+  const {category} = params
+  const dummyData = await fetchShop(category)
 
   return (
     <div className="flex flex-col flex-start p-4 shop-wrapper">
@@ -38,13 +36,13 @@ export default function Shop({params}) {
       <div className="flex my-4">
         <Link
           href="/"
-          className={`mr-4 ${selectedCategory === 'All' ? 'font-bold' : ''}`}
+          className={`mr-4 font-bold`}
         >
           Головна
         </Link>
         <Link
           href="/shop/id"
-          className={`mr-4 ${selectedCategory === 'Shop' ? 'font-bold' : ''}`}
+          className={`mr-4 font-bold`}
         >
           Магазин
         </Link>
@@ -53,26 +51,18 @@ export default function Shop({params}) {
       {/* Заголовок і сортування */}
       <div className="flex items-center justify-between w-full mb-8">
         <h2 className="text-xl font-bold fz-16">{params.category}</h2>
-        <div className="flex items-center">
-          <p className="mr-4">Сортувати за: 
-          </p>
-          <label className="inline-flex items-center h-27">
-          <select className="select-custom rounded-xs br-color-prim2 w-full max-w-xs">
-          <option className='text-black'>ціною вв</option>
-          <option className='text-black'>ціною вн</option>
-        </select>
-          </label>
-        </div>
+        <SortOption/>
       </div>
+      {/**************************/}
 
       {/* Контентна частина */}
       <div className="flex w-full">
         {/* Сайдбар */}
-        <Sidebar/>
-
+        <Sidebar category={params.category}/>
+        {/**************************/}
         {/* Список продуктів */}
         <div className="flex flex-wrap justify-between w-3/4">
-          {products.map((product) => (
+          {dummyData.map((product) => (
             <div key={product.id} className="w-1/3 w-250 px-2 mb-20">
               {/* Карточка продукту */}
               <div className="w-250 h-400">

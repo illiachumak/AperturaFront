@@ -2,5 +2,9 @@
     border-radius: 5px;
     border: 1px solid #EBAF5A;
     font-size: 13px;
-    height: 30;
+    height: 30px;
+}
+.button-shop:hover{
+    border-right: 3px solid #EBAF5A ;
+    background: rgba(0, 0, 0, 0.15)
 }

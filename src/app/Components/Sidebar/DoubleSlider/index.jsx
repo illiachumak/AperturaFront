@@ -17,11 +17,11 @@ export default function DoubleSlider() {
                 <div className="form_control">
                     <div className="flex items-center">
                         <div className="mr-2">Від</div>
-                        <input type="text" placeholder="min" className="input input-bordered custom-input text-black" value={min}/>
+                        <input type="text" placeholder="min" className="input input-bordered custom-input text-black" value={min} onChange={() => {}}/>
                     </div>
                     <div className="flex items-center">
                         <div className="mr-2">До</div>
-                        <input type="text" placeholder="max" className="input input-bordered custom-input text-black" value={max}/>
+                        <input type="text" placeholder="max" className="input input-bordered custom-input text-black" value={max} onChange={() => {}}/>
                     </div>
                 </div>
                 <div className="sliders_control">
