@@ -51,7 +51,7 @@ export default async function Shop({params}) {
       {/* Заголовок і сортування */}
       <div className="flex items-center justify-between w-full mb-8">
         <h2 className="text-xl font-bold fz-16">{params.category}</h2>
-        <SortOption/>
+        <SortOption category={category}/>
       </div>
       {/**************************/}
 
@@ -61,7 +61,7 @@ export default async function Shop({params}) {
         <Sidebar category={params.category}/>
         {/**************************/}
         {/* Список продуктів */}
-        <div className="flex flex-wrap justify-between w-3/4">
+        <div className=" ml-14 flex flex-wrap justify-between w-3/4">
           {dummyData.map((product) => (
             <div key={product.id} className="w-1/3 w-250 px-2 mb-20">
               {/* Карточка продукту */}

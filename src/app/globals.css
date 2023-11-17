@@ -60,6 +60,12 @@ body{
 .w-250 {
   width: 250px;
 }
+.w-300 {
+  width: 300px;
+}
+.w-all{
+  width: 100%;
+}
 .bg-color-prim1{
   background: #3A2911;
 }
