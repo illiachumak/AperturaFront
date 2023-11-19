@@ -86,3 +86,17 @@ body{
   background: #846436;
 }
 
+.w-1-43{
+  width: 21%;
+}
+
+.main_button:hover {
+  transition: 0.5s;
+  background-color: rgb(202 138 4);
+  color: #3A2911;
+  opacity: 1;
+}
+
+.w-48p{
+  width: 48%;
+}

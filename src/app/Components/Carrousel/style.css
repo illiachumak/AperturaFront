@@ -1,0 +1,27 @@
+.h-484{
+  height: 30rem;
+}
+
+.main_text{
+  color: #FFF;
+  text-align: center;
+  font-family: Liberation Mono;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 20px;
+}
+  
+.main_button{
+    width: 100%;
+    padding: 10px 7px;
+    border: 2px solid rgb(202 138 4);
+    margin: 0 auto;
+}
+
+.carousel a{
+    align-self: center;
+    width: 20%;
+}
+  
