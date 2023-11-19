@@ -11,8 +11,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="scroll-smooth">
+      <body className='flex justify-center flex-col'>
        <Navbar/>
         <ReduxProvider>
             {children}
