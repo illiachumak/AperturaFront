@@ -69,8 +69,8 @@ const Sidebar = ({category}) => {
   };
 
   return (
-      <div className='flex flex-col w-1/4'>
-      <div className="mr-8 bg-color-prim1 mb-8 rounded-xs text-white">
+      <div className='flex flex-col w-300'>
+      <div className=" bg-color-prim1 mb-8 rounded-xs text-white">
         {categories.map((category) => (
           <div key={category.id}>
             <button
