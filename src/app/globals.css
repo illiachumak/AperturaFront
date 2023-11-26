@@ -25,8 +25,8 @@ html{
   padding: 0 30px;
 }
 .py-5x{
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
 }
 
 .about-bg{
