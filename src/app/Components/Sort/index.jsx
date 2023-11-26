@@ -7,8 +7,9 @@ function SortOption() {
   const [selectedCategory, setSelectedCategory] = useState("Найдешевше");
 
   useEffect(() => {
-    // Перевірка, чи є параметр sort у query
-    const sortParam = window.location.search.sort;
+  
+    const urlParams = new URLSearchParams(window.location.search);
+    const sortParam = urlParams.get('sort');
     if (sortParam) {
       // Якщо є, встановлюємо значення selectedCategory відповідно
       setSelectedCategory(sortParam);
@@ -37,7 +38,7 @@ function SortOption() {
 
   return (
     <div className="flex items-center">
-      <p className="mr-4">Сортувати за:</p>
+      <p className="mr-4 max-[783px]:hidden">Сортувати за:</p>
       <label className="inline-flex items-center h-27">
         <select
           className="select-custom rounded-xs br-color-prim2 w-full max-w-xs"

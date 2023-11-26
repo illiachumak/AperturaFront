@@ -1,11 +1,12 @@
-
+'use client'
 import Link from 'next/link';
 import Image from 'next/image';
 import Sidebar from '@/app/Components/Sidebar';
 import dummycardphoto from '../../assets/shop/cardDummy.jpg'
-import '../style.css'
 import ShopCardButton from '@/app/Components/Buttons/shopCardButton';
 import SortOption from '@/app/Components/Sort';
+import CategoriesMobile from '@/app/Components/Sidebar/CategoriesMobile';
+
 /*
     * Responsible for rendering component
     * Responsible for fetching shop data
@@ -20,8 +21,9 @@ import SortOption from '@/app/Components/Sort';
     { id: 5, photo: dummycardphoto, text: 'Product 2', price: 49.99 },
     { id: 6, photo: dummycardphoto, text: 'Product 3', price: 19.99 },
   ];
-
- 
+  console.log('fetched')
+  setTimeout(()=>{
+  },500)
     //const data= await fetch(`base_url/api/${category}`)
     return dummyData
  }
@@ -31,57 +33,57 @@ export default async function Shop({params}) {
   const dummyData = await fetchShop(category)
 
   return (
-    <div className="flex flex-col flex-start p-4 shop-wrapper">
-      {/* Навігація */}
-      <div className="flex my-4">
-        <Link
-          href="/"
-          className={`mr-4 font-bold`}
-        >
-          Головна
-        </Link>
-        <Link
-          href="/shop/id"
-          className={`mr-4 font-bold`}
-        >
-          Магазин
-        </Link>
+    <>
+     <div className="shop-wrapper max-[900px]:px-[50px]">
+      <div className="flex flex-row flex-start p-4r w-full">
+        {/* Навігація */}
+        <h2 className="block text-xl font-bold fz-16 min-[783px]:hidden my-4">{params.category}</h2>
+        <div className="flex my-4 max-[783px]:hidden">
+          <Link
+            href="/"
+            className={`mr-4 font-bold`}
+          >
+            Головна
+          </Link>
+          <Link
+            href="/shop/id"
+            className={`mr-4 font-bold`}
+          >
+            Магазин
+          </Link>
+        </div>
       </div>
+       
+        <div className="flex justify-between items-center w-full mb-8">
+          <h2 className="block text-xl font-bold fz-16 max-[783px]:hidden">{params.category}</h2>
+          <CategoriesMobile category={category}/>
+          <SortOption category={category}/>
+        </div>
 
-      {/* Заголовок і сортування */}
-      <div className="flex items-center justify-between w-full mb-8">
-        <h2 className="text-xl font-bold fz-16">{params.category}</h2>
-        <SortOption category={category}/>
-      </div>
       {/**************************/}
-
-      {/* Контентна частина */}
-      <div className="flex w-full">
-        {/* Сайдбар */}
+          <div className="flex w-full">
         <Sidebar category={params.category}/>
-        {/**************************/}
-        {/* Список продуктів */}
-        <div className=" ml-14 flex flex-wrap justify-between w-3/4">
-          {dummyData.map((product) => (
-            <div key={product.id} className="w-1/3 w-250 px-2 mb-20">
-              {/* Карточка продукту */}
-              <div className="w-250 h-400">
+        <div className="ml-14 flex flex-row flex-wrap gap-12 justify-between max-[1124px]:justify-around max-[785px]:justify-center max-[785px]:ml-0 ">
+        {dummyData.map((product) => (
+          <div key={product.id} className="mb-16 basis-[240px] max-[900px]:basis-[190px] max-[785px]:basis-[240px]">
+            <div className=" h-400">
               <div className='relative mb-6'>
                 <Image src={dummycardphoto} alt={product.text} className="w-full h-345 object-cover mb-2 rounded-xs" />
                 <p style={{ position: 'absolute', bottom: 10, left: 12, width: '100%',}} className="text-lg text-white font-bold">
                   {product.text}
                 </p>
               </div>
-                <div className="flex flex-row justify-between items-center">
-                <p className="text-white fz-14">{`Від: ${product.price.toFixed(2)} грн`}</p>
-                <ShopCardButton/>
-                </div>
+              <div className="flex flex-row justify-between items-center">
+                <p className="text-white fz-12">{`Від: ${product.price.toFixed(2)} грн`}</p>
+                <ShopCardButton />
               </div>
             </div>
+          </div>
           ))}
         </div>
       </div>
     </div>
+      </>
   );
 }
     

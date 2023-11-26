@@ -19,22 +19,33 @@ html{
   background-repeat: repeat;
   background-position: center;
 }
+.shop-wrapper{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+.py-5x{
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.about-bg{
+  background-image: url('../../public/aboutbg.jpg');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+}
 
 *{
   font-family: 'Liberation Mono', sans-serif;
   font-size: 12px;                                            
 }
 body{
-  width: 100%;
-  background-image: url('./assets/shop/shopbg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   color: white;
 }
 .select-custom{
-  height: 30px;
-  padding: 0 4px;
+  height: 34px;
+  padding: 0 7px;
 }
 .custom-input{
   border:solid 1px #EBAF5A;
@@ -105,4 +116,16 @@ body{
 
 .w-48p{
   width: 48%;
+}
+
+.mb-6rem{
+  margin-bottom: 5rem !important;
+}
+.about-us-text{
+  font-size: 18px;
+}
+@media (max-width: 1160px) {
+  .about-us-text{
+    font-size: 17px;
+  }
 }

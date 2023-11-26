@@ -5,12 +5,20 @@ import Logo from '../../../../public/aperturaLogoWhite.png'
 export default function Footer() {
     return (
         <>
-            <footer className="bg-[#130E04]">
-                <div className="h-10 bg-[#3A2911]"/>
-                <div className="flex justify-between p-3 align-bottom shop-wrapper">
-                    <Link href='/' className="m-3 flex items-center"><Image src={Logo} alt="logo" width={80} height={80}/></Link>
-                    <h2 className="m-3 items-end flex ">All right reserved</h2>
-                    <div className="m-3 w-1/12 flex flex-wrap text-sm content-center"> Контакти: +380123456789 apertura@gmail.com м.&nbsp;Львів вул.&nbsp;Чорновола 44</div>
+        <div className="h-10 bg-[#3A2911]"/>
+            <footer className="bg-[#130E04] py-10">
+                <div className="px-8 align-bottom shop-wrapper h-[100px]">
+                    <div className="w-full flex justify-between">
+                    <Link href='/' className="flex items-center"><Image src={Logo} alt="logo" width={80} height={80}/></Link>
+                    <h2 className="items-end flex max-[550px]:hidden     ">All right reserved</h2>
+                    <div className="w-230 text-sm content-center flex flex-col gap-2 text-right"> 
+                        <p className="mb-2">Контакти:</p>
+                        <p>+380123456789</p>
+                        <p>apertura@gmail.com</p>
+                        <p>м.Львів вул.Чорновола 44</p>
+                        <p>Зворотній зв`язок</p>
+                    </div>
+                </div>
                 </div>
             </footer>
         </>
