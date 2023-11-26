@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useLayoutEffect, useState } from 'react';
+import {useLayoutEffect, useState } from 'react';
 import DoubleSlider from './DoubleSlider';
 import './style.css'
 import { useRouter } from 'next/navigation';
