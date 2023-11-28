@@ -17,6 +17,7 @@ const Sidebar = ({category}) => {
 
   useLayoutEffect(()=>{
     setActiveCategory(category[0])
+    setOpenCategories(category[0])
     if(category[1]){
       setActiveSubcategory(category)
     } 
@@ -83,14 +84,14 @@ const Sidebar = ({category}) => {
               >
                 <p className='inline-block cursor-pointer'>{category.name}</p> {category.subcategories && <Image src={arrDown} alt='' width={28} 
                 className={`absolute top-[15%] right-4 cursor-pointer transition-transform 
-                ${(openCategories === category.id || activeCategory === category.id) && 'rotate-180'}`} 
+                ${(openCategories === category.id) && 'rotate-180'}`} 
                 onClick={(e) => {
                 e.stopPropagation()
                 setOpenCategories(openCategories === category.id ? '' : category.id)
                 console.log(openCategories)}
                 }/>}
               </button>
-              {(openCategories === category.id || activeCategory === category.id) && (
+              {(openCategories === category.id) && (
                 <ul>
                   {category.subcategories.map((subcategory) => (
                     <li key={subcategory.id}>

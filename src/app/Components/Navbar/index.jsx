@@ -10,7 +10,7 @@ import BurgerMenu from '../BurgerMenu'
 
 export default function Navbar() {
 
-      return (<div className = 'bg-[#130E04] sticky top-0 z-10'>
+      return (<div className = 'navbar-custom bg-[#130E04] sticky top-0 z-10'>
         
         <nav className=" bg-[#130E04]font-sans shop-wrapper py-5x">
          <div className="w-full flex justify-between items-center">
