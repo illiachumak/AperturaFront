@@ -1,11 +1,11 @@
 'use client'
 import Link from 'next/link';
 import Image from 'next/image';
-import Sidebar from '@/app/Components/Sidebar';
+import Sidebar from '../../Components/Sidebar';
 import dummycardphoto from '../../assets/shop/cardDummy.jpg'
-import ShopCardButton from '@/app/Components/Buttons/shopCardButton';
-import SortOption from '@/app/Components/Sort';
-import CategoriesMobile from '@/app/Components/Sidebar/CategoriesMobile';
+import ShopCardButton from '../../Components/Buttons/shopCardButton';
+import SortOption from '../../Components/Sort';
+import CategoriesMobile from '../../Components/Sidebar/CategoriesMobile';
 
 /*
     * Responsible for rendering component
