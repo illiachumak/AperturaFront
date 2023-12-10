@@ -348,18 +348,38 @@ export default function Shop({ params }) {
 
   const [optionsToSend, setOptionsToSend] = useState([]);
   const handleOptionChange = (item, selectedValue) => {
-    const newOptionsToSend = optionsToSend.map(option => {
-      if (option.name === item.name) {
-        return {
+    console.log('Selected Value:', selectedValue);
+  
+    // Перевірка, чи існує айтем в масиві
+    const existingOptionIndex = optionsToSend.findIndex(option => option.name === item.name);
+  
+    if (existingOptionIndex !== -1) {
+      // Якщо айтем існує, замінюємо його значення
+      const newOptionsToSend = optionsToSend.map((option, index) => {
+        if (index === existingOptionIndex) {
+          return {
+            name: item.name,
+            value: selectedValue,
+            price: item.options.find(option => option.name === selectedValue)?.price || 0,
+          };
+        }
+        return option;
+      });
+  
+      setOptionsToSend(newOptionsToSend);
+    } else {
+      // Якщо айтем не існує, додаємо новий об'єкт до масиву
+      setOptionsToSend(prevOptions => [
+        ...prevOptions,
+        {
           name: item.name,
           value: selectedValue,
           price: item.options.find(option => option.name === selectedValue)?.price || 0,
-        };
-      }
-      return option;
-    });
-
-    setOptionsToSend(newOptionsToSend);
+        },
+      ]);
+    }
+  
+    console.log(optionsToSend);
   };
 
   const handleOrderButtonClick = () => {
