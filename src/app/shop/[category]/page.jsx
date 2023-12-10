@@ -11,8 +11,7 @@ import CategoriesMobile from '../../Components/Sidebar/CategoriesMobile';
     * Responsible for rendering component
     * Responsible for fetching shop data
 */
-
- export default function FetchShop(category) {
+function fetchShop(category) {
   let dummyData = [
     { id: 1, photo: dummycardphoto, text: 'Product 1', price: 29.99 },
     { id: 2, photo: dummycardphoto, text: 'Product 2', price: 49.99 },
