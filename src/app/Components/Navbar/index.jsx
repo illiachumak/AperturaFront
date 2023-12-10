@@ -21,7 +21,12 @@ export default function Navbar() {
           <div className="flex px-0">
             <ul className=" divide-x divide-gray-600 self-center flex items-center gap-8 max-[720px]:hidden">
               <li><NextLink href='/shop' className="pl-4 hover:text-yellow-500 !active:text-yellow-500 mx-3 text-[13px]">Магазин</NextLink></li>
-              <li><NextLink href={`${window.location.pathname === '/' ? '#section-to-scroll' : '/#section-to-scroll'}`} className="pl-4 hover:text-yellow-500 mx-3 !active:text-yellow-500 text-[13px]">Зворотній зв&apos;язок</NextLink></li>
+              <li><NextLink
+                    href={`${typeof window !== 'undefined' && window.location.pathname === '/' ? '#section-to-scroll' : '/#section-to-scroll'}`}
+                    className="pl-4 hover:text-yellow-500 mx-3 !active:text-yellow-500 text-[13px]"
+                  >
+                    Зворотній зв&apos;язок
+                  </NextLink></li>
               <li><p className="pl-4 hover:text-yellow-500 mx-3 text-[13px] cursor-pointer" onClick={() => {
                 navigator.clipboard.writeText('+380665763845')
                 alert("Номер скопійовано!")
