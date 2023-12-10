@@ -87,8 +87,7 @@ const Sidebar = ({category}) => {
                 ${(openCategories === category.id) && 'rotate-180'}`} 
                 onClick={(e) => {
                 e.stopPropagation()
-                setOpenCategories(openCategories === category.id ? '' : category.id)
-                console.log(openCategories)}
+                setOpenCategories(openCategories === category.id ? '' : category.id)}
                 }/>}
               </button>
               {(openCategories === category.id) && (

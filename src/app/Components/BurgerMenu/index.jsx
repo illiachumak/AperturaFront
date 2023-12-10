@@ -21,12 +21,15 @@ export default function Navbar() {
         </div>  
           <div className={`absolute z-[55] top-[0] right-0 ${open ? '' : 'hidden'}`}>
             <div className="bg-[#130E04] opacity-50  w-screen h-screen z-9" onClick={handleOnClose}></div>
-            <div className="absolute top-0 right-0 w-[50%] h-screen bg-[#130E04]">
-            <Image src={X} alt="" width={25} className="absolute right-[10%] top-[5%]" onClick={handleOnClose} />
-            <ul className="menu menu-horizontal self-center flex flex-col items-end gap-8 text-[30px] font-bold pt-[44%]">
+            <div className="absolute top-0 right-0 w-[80%] h-screen bg-[#130E04]">
+            <Image src={X} alt="" width={25} className="absolute right-[18%] top-[28px]" onClick={handleOnClose} />
+            <ul className="menu menu-horizontal self-center flex flex-col items-end gap-8 text-[30px] mr-[9%] font-bold pt-[100px]">
               <li onClick={handleOnClose}><Link href='/shop' className="hover:text-[#EBAF5A] active:text-[#EBAF5A] mx-3">Магазин</Link></li>
-              <li onClick={handleOnClose}><Link href='/' className="hover:text-[#EBAF5A] mx-3">Зворотній зв'язок</Link></li>
-              <li onClick={handleOnClose}><Link href='/' className="hover:text-[#EBAF5A] mx-3">0665763845</Link></li>
+              <li onClick={handleOnClose}><Link href={`${window.location.pathname === '/' ? '#section-to-scroll' : '/#section-to-scroll'}`} className="hover:text-[#EBAF5A] mx-3">Зворотній зв'язок</Link></li>
+              <li><p className="pl-4 hover:text-yellow-500 mx-3 text-[13px] cursor-pointer" onClick={() => {
+                navigator.clipboard.writeText('+380665763845')
+                alert("Номер скопійовано!")
+                }}>+380665763845</p></li>
               <li onClick={handleOnClose}><Link href='/' className="hover:text-[#EBAF5A] mx-3">Корзина</Link></li>
             </ul>
             </div>

@@ -12,7 +12,7 @@ import CategoriesMobile from '@/app/Components/Sidebar/CategoriesMobile';
     * Responsible for fetching shop data
 */
 
- export async function fetchShop(category) {
+ export function fetchShop(category) {
   let dummyData = [
     { id: 1, photo: dummycardphoto, text: 'Product 1', price: 29.99 },
     { id: 2, photo: dummycardphoto, text: 'Product 2', price: 49.99 },
@@ -28,13 +28,13 @@ import CategoriesMobile from '@/app/Components/Sidebar/CategoriesMobile';
     return dummyData
  }
 
-export default async function Shop({params}) {
+export default function Shop({params}) {
   const {category} = params
-  const dummyData = await fetchShop(category)
+  const dummyData = fetchShop(category)
 
   return (
     <>
-     <div className="shop-wrapper max-[900px]:px-[50px]">
+     <div className="responsive-container">
       <div className="flex flex-row flex-start p-4r w-full">
         {/* Навігація */}
         <h2 className="block text-xl font-bold fz-16 min-[783px]:hidden my-4">{params.category}</h2>
@@ -68,14 +68,15 @@ export default async function Shop({params}) {
           <div key={product.id} className="mb-16 basis-[240px] max-[900px]:basis-[190px] max-[785px]:basis-[240px]">
             <div className=" h-400">
               <div className='relative mb-6'>
-                <Image src={dummycardphoto} alt={product.text} className="w-full h-345 object-cover mb-2 rounded-xs" />
+                
+                <Link href={`/product/${product.id}`}><Image src={dummycardphoto} alt={product.text} className="w-full h-345 object-cover mb-2 rounded-xs" /></Link>
                 <p style={{ position: 'absolute', bottom: 10, left: 12, width: '100%',}} className="text-lg text-white font-bold">
                   {product.text}
                 </p>
               </div>
               <div className="flex flex-row justify-between items-center">
                 <p className="text-white fz-12">{`Від: ${product.price.toFixed(2)} грн`}</p>
-                <ShopCardButton />
+                <Link href={`/product/${product.id}`}><ShopCardButton /></Link>
               </div>
             </div>
           </div>

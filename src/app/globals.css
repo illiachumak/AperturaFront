@@ -4,7 +4,9 @@
 @import url('https://fonts.cdnfonts.com/css/liberation-mono');
 
 
-
+img{
+  max-width: none;
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -40,8 +42,12 @@ html{
   font-family: 'Liberation Mono', sans-serif;
   font-size: 12px;                                            
 }
+
 body{
   color: white;
+}
+.wrapper{
+  padding: 0 20px;
 }
 .select-custom{
   height: 34px;
@@ -107,13 +113,6 @@ body{
   width: 21%;
 }
 
-.main_button:hover {
-  transition: 0.5s;
-  background-color: rgb(202 138 4);
-  color: #3A2911;
-  opacity: 1;
-}
-
 .w-48p{
   width: 48%;
 }
@@ -122,10 +121,124 @@ body{
   margin-bottom: 5rem !important;
 }
 .about-us-text{
-  font-size: 18px;
+  font-size: 19px;
+  line-height: 1.8;
 }
 @media (max-width: 1160px) {
   .about-us-text{
     font-size: 17px;
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #3A2911;
+  border-radius: 5px;
+  
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #574223;
+}
+
+.responsive-container {
+  @apply w-[1200px] mx-auto max-[1280px]:w-[90%]
+}
+
+
+.main_button-white{
+  padding: 7px 5px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.main_button-white:hover{
+  background: rgba(200, 128, 41, 0.05)
+}
+
+@media screen and (max-width: 400px) {
+  .image-container {
+    width: 225px !important;
+    height: auto ;
+    margin-bottom: 1rem;
+  }
+
+}
+/* Image and Product Options Block */
+@media screen and (max-width: 640px) {
+  .image-options-block {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-container {
+    width: 300px;
+    height: auto ;
+    margin-bottom: 1rem;
+  }
+
+  .options-block {
+    width: 100%;
+    height: auto;
+    overflow-y: scroll;
+  }
+}
+/* Price Summary Block */
+@media screen and (min-width: 641px) and (max-width: 900px) {
+  .price-summary-block {
+    display: none; /* Hide on medium-sized screens */
+  }
+}
+
+/* Order Summary Block */
+@media screen and (min-width: 641px) and (max-width: 900px) {
+  .order-summary-block {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .order-summary-block .price-details {
+    flex-direction: column;
+  }
+
+  .order-summary-block button {
+    width: 100%;
+  }
+}
+
+/* Description Block */
+@media screen and (max-width: 900px) {
+  .description-block {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+/* Responsive Container */
+@media screen and (max-width: 900px) {
+  .responsive-container {
+    padding: 0 1rem;
+  }
+}
+
+.min-640px-hidden{
+  display: flex;
+}
+@media (min-width: 640px) {
+  .min-640px-hidden{
+    display: none;
   }
 }

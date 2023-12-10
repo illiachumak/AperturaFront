@@ -15,7 +15,7 @@ export default function Carousel() {
     <>
       
         <div className="w-full flex align-middle justify-center max-[750px]:hidden"> 
-          <Image src={carousel} className=" object-cover w-[1200px] h-[484]" alt='carousel-image'/>
+          <Image src={carousel} className=" object-cover w-full h-[484]" alt='carousel-image'/>
           <div className='flex justify-center absolute flex-col self-center z-0 text-center'>
             <h2 className='main_text text-[24px] w-[500px] 
             max-[1000px]:w-[350px] max-[1000px]:text-[18px] 

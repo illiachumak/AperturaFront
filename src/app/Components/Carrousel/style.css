@@ -33,11 +33,13 @@
   background: rgba(255, 187, 3, 0.05);
   color: #FFF;
 }
-
 .carousel a{
     align-self: center;
     width: 20%;
 }
 .border-main{
   border: #EBAF5A 1px solid;
+}
+.border-main-red {
+  border: red 1px solid;
 }
