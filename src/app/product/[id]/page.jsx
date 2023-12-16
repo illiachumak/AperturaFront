@@ -2,6 +2,9 @@
 import Image from 'next/image';
 import productImg from '../../assets/product/door.png';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { addToCart, openCart } from '../../redux/slices/cartSlice';
 
 let dummyData = {
   uid: '2jghj23434F461',
@@ -345,12 +348,13 @@ let dummyData = {
 };
 
 export default function Shop({ params }) {
-
+  const router = useRouter()
+  const dispatch = useDispatch()
   const [optionsToSend, setOptionsToSend] = useState([]);
   const handleOptionChange = (item, selectedValue) => {
     console.log('Selected Value:', selectedValue);
   
-    // Перевірка, чи існує айтем в масиві
+  
     const existingOptionIndex = optionsToSend.findIndex(option => option.name === item.name);
   
     if (existingOptionIndex !== -1) {
@@ -388,8 +392,8 @@ export default function Shop({ params }) {
     });
 
     if (areAllOptionsSelected) {
-      // Perform the order logic here
-      alert('Передано в корзину')
+      dispatch(addToCart({...dummyData, optionals: optionsToSend, quantity: 1, price: optionsToSend.reduce((total, option) => total + option.price, 0)+dummyData.price}))
+      dispatch(openCart())
     } else {
       // Display an alert if not all options are selected
       alert('Please select all options before placing the order.');

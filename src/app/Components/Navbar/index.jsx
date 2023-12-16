@@ -4,12 +4,15 @@ import NextLink from "next/link"
 import Logo from '../../../../public/aperturaLogoWhite.png'
 import './style.css'
 import BurgerMenu from '../BurgerMenu'
+import { openCart } from "../../redux/slices/cartSlice"
+import { useDispatch } from "react-redux"
 /*
     * Responsible for rendering navbar
     * Responsible for routing
 */
 
 export default function Navbar() {
+  const dispatch = useDispatch()
       return (
       <div className="bg-[#130E04] sticky top-0 z-10"
     >
@@ -22,7 +25,7 @@ export default function Navbar() {
             <ul className=" divide-x divide-gray-600 self-center flex items-center gap-8 max-[720px]:hidden">
               <li><NextLink href='/shop' className="pl-4 hover:text-yellow-500 !active:text-yellow-500 mx-3 text-[13px]">Магазин</NextLink></li>
               <li><NextLink
-                    href={`${typeof window !== 'undefined' && window.location.pathname === '/' || '' ? 'https://apertura-front-new.vercel.app/#section-to-scroll' : 'https://apertura-front-new.vercel.app/#section-to-scroll'}`}
+                    href={`${typeof window !== 'undefined' && window.location.pathname === '/' || '' ? 'https://localhost:3000/#section-to-scroll' : 'https://localhost:3000/#section-to-scroll'}`}
                     className="pl-4 hover:text-yellow-500 mx-3 !active:text-yellow-500 text-[13px]"
                   >
                     Зворотній зв&apos;язок
@@ -31,7 +34,8 @@ export default function Navbar() {
                 navigator.clipboard.writeText('+380665763845')
                 alert("Номер скопійовано!")
                 }}>+380665763845</p></li>
-              <li><NextLink href='/' className="pl-4 hover:text-yellow-500 mx-3 text-[13px]">Корзина</NextLink></li>
+              <li><div className="pl-4 hover:text-yellow-500 mx-3 text-[13px] cursor-pointer"
+              onClick={()=> dispatch(openCart())}>Корзина</div></li>
             </ul>
             <BurgerMenu/>
           </div>

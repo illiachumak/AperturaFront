@@ -45,6 +45,7 @@ html{
 
 body{
   color: white;
+  min-width: 400px;
 }
 .wrapper{
   padding: 0 20px;
@@ -241,4 +242,17 @@ body{
   .min-640px-hidden{
     display: none;
   }
+}
+
+.bg-overlay{
+  background-color: rgba(0, 0, 0, 0.5)
+}
+
+.h-36px{
+  height: 36px;
+}
+
+.bg-loading{
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
 }
