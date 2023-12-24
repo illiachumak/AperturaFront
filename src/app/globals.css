@@ -87,6 +87,7 @@ body{
 .bg-color-prim1{
   background: #3A2911;
 }
+
 .br-color-prim2{
   border:solid 1px #EBAF5A;
   background: transparent;
@@ -144,7 +145,7 @@ body{
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #3A2911;
+  background: #62461e;
   border-radius: 5px;
   
 }
@@ -159,7 +160,28 @@ body{
 }
 
 
-.main_button-white{
+
+.main_button{
+  padding: 7px 5px;
+  border: 1px solid #EBAF5A;
+  border-radius: 5px;
+  text-align: center;
+}
+@media (max-width: 700px) {
+.main_button{
+  padding-bottom: 0;
+padding-top: 0; }
+}
+@media (max-width: 550px) {
+.main_button{
+  padding-bottom: 0;
+  padding-top: 0;
+}
+}
+.main_button:hover{
+background: rgba(255, 187, 3, 0.05);
+color: #FFF;
+}.main_button-white{
   padding: 7px 5px;
   border: 1px solid #ffffff;
   border-radius: 5px;

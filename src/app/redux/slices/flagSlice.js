@@ -12,8 +12,10 @@ export const flagSlice = createSlice({
     setLoading: (state, action) => {
       state.isLoading = action.payload;
       if (action.payload) {
+        document.body.style.height = '100vh';
         document.body.style.overflow = 'hidden';
       } else {
+        document.body.style.height = 'auto';
         document.body.style.overflow = 'auto';
       }
   },

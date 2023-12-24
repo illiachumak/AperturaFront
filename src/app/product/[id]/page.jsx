@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart, openCart } from '../../redux/slices/cartSlice';
 
 let dummyData = {
-  uid: '2jghj23434F461',
+  uid: '2jgheeeej',
   name: 'Міжкімнатні двері',
   category: 'doors',
   description: 'Lorem ipsum...',
@@ -403,6 +403,9 @@ export default function Shop({ params }) {
 
   return (
     <div className="my-12 responsive-container">
+        <div className="min-640px-hidden">
+        <p className="mb-8 text-[24px] uppercase font-bold">Приховані двері 33456</p>
+        </div>
       <div className="flex justify-between gap-[2%] max-[640px]:flex-col max-[640px]:items-center image-options-block">
         <Image src={productImg} alt="" className="image-container basis-[20%] h-[500px] rounded-[5px] max-[640px]:basis-[50%]" />
 

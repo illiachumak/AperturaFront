@@ -12,27 +12,7 @@
   margin-bottom: 20px;
 }
   
-.main_button{
-    padding: 7px 5px;
-    border: 1px solid #EBAF5A;
-    border-radius: 5px;
-    text-align: center;
-}
-@media (max-width: 700px) {
-  .main_button{
-    padding-bottom: 0;
-  padding-top: 0; }
-}
-@media (max-width: 550px) {
-  .main_button{
-    padding-bottom: 0;
-    padding-top: 0;
-  }
-}
-.main_button:hover{
-  background: rgba(255, 187, 3, 0.05);
-  color: #FFF;
-}
+
 .carousel a{
     align-self: center;
     width: 20%;

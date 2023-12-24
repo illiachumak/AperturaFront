@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import Modal from '../Modal';
 
 const FeedbackSection = () => {
   const [name, setName] = useState('');
@@ -7,7 +8,7 @@ const FeedbackSection = () => {
   const [phoneIsValid, setPhoneIsValid] = useState(true);
   const [nameIsValid, setNameIsValid] = useState(true)
   const phoneRegex = /^(\+38)?\d{10}$/;
-
+  const [isOpen, setIsOpen] = useState(false);
   const validatePhoneNumber = () => {
     setPhoneIsValid(phoneRegex.test(phone));
   };
@@ -24,15 +25,17 @@ const FeedbackSection = () => {
     }
   
     if (name.trim() && phoneIsValid) {
-      // Ваш код для виконання замовлення
-      alert('Ми вам передзвонимо');
-    } else {
-      // Ваш код для обробки помилок або повідомлення користувачу
-      console.log('Будь ласка, введіть правильні дані');
+      setIsOpen(true)
     }
   };
 
-  return (
+  return (<>
+  {isOpen && <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+    <div className='w-full h-full px-[8%] py-[40px]'>
+      <b className='text-[18px] mb-2'>{name}, дякуємо за цікавість!</b>
+      <p>Ми зателефонуємо вам протягом 1 робочого дня</p>
+    </div>
+    </Modal>}
     <div id="section-to-scroll" className="w-full bg-[#130E04]">
       <div className="responsive-container !mt-20 flex flex-row max-[780px]:flex-col gap-12 justify-between">
         <div className="max-w-1/2 flex flex-col justify-center max-[780px]:order-2 max-[780px]:max-w-[100%]">
@@ -42,7 +45,7 @@ const FeedbackSection = () => {
               type="name"
               className={`${
                 nameIsValid ? 'border-main' : 'border-main-red'
-              } h-[45px] text-xl rounded-md w-[400px] p-2.5 bg-transparent 
+              }  border-2 text-xl rounded-md w-[400px] p-2.5 bg-transparent 
             max-[1000px]:h-[40px] max-[875px]:w-[350px] max-[780px]:w-full`}
               placeholder="Ім`я"
               value={name}
@@ -56,7 +59,7 @@ const FeedbackSection = () => {
               type="tel"
               className={`${
                 phoneIsValid ? 'border-main' : 'border-main-red'
-              } h-[45px] text-xl rounded-md w-full p-2.5 border-2 bg-transparent 
+              }  text-xl rounded-md w-full p-2.5 !border-2 bg-transparent 
                 max-[1000px]:h-[40px] max-[875px]:w-[350px] max-[780px]:w-full`}
               placeholder="(097)-743-23-56"
               pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
@@ -67,7 +70,7 @@ const FeedbackSection = () => {
             {!phoneIsValid && <label className="block mt-2 text-[#f53131] text-[12px] font-medium ">Введіть правильний номер!</label>}
           </div>
           <button
-            className="text-xl main_button !py-4 mt-10 mb-20 w-2/3 
+            className="text-xl main_button  !py-4 mt-10 mb-20 w-2/3 
             !max-[900px]:text-[12px] max-[780px]:w-full"
             onClick={(e) => handleOrderButtonClick(e)}
           >
@@ -83,6 +86,7 @@ const FeedbackSection = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

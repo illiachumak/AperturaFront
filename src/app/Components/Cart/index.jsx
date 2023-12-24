@@ -4,18 +4,55 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeCart, selectIsCartOpen, initializeCartFromStorage, removeFromCart, changeQuantity } from '../../redux/slices/cartSlice';
+import { closeCart, selectIsCartOpen, initializeCartFromStorage,
+   removeFromCart, changeQuantity, selectIsSendModalOpen, openSendModal, closeSendModal } from '../../redux/slices/cartSlice';
 import productImg from '../../assets/product/door.png';
 import Image from 'next/image';
 import {setLoading} from '../../redux/slices/flagSlice'
 
 const Cart = () => {
   const isOpen = useSelector(selectIsCartOpen);
+  const productArr = useSelector((state) => state.cart.items);
+  const isSendModalOpen = useSelector(selectIsSendModalOpen)
   const dispatch = useDispatch();
-  const closeModal = () => {
+
+
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [phoneIsValid, setPhoneIsValid] = useState(true);
+  const [nameIsValid, setNameIsValid] = useState(true)
+  const phoneRegex = /^(\+38)?\d{10}$/;
+  const validatePhoneNumber = () => {
+    setPhoneIsValid(phoneRegex.test(phone));
+  };
+
+  const handleOrderButtonClick = (e) => {
+    e.preventDefault();
+    
+    setNameIsValid(true);
+    setPhoneIsValid(true);
+    validatePhoneNumber();
+    // Check for name validity
+    if (!name.trim()) {
+      setNameIsValid(false);
+    }
+  
+    if (name.trim() && phoneIsValid) {
+      setIsOpen(true)
+    }
+  };
+
+
+
+  const handleCloseModal = () => {
     dispatch(closeCart());
   };
-  const productArr = useSelector((state) => state.cart.items);
+  const handleCloseSendModal = () => {
+    dispatch(closeSendModal());
+  };
+  const handleOpenSendModal = () => {
+    dispatch(openSendModal())
+  }
 
   const removeItem = (productId) => {
     dispatch(removeFromCart(productId));
@@ -37,12 +74,12 @@ const Cart = () => {
 
   return (
     <div>
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className='w-full h-full px-[4%] pt-[7%] pb-[4%] flex flex-col justify-between'>
+      <Modal isOpen={isOpen} onClose={handleCloseModal}>
+        <div className='w-full px-[2%] pt-[5%] pb-[4%] flex flex-col justify-between'>
           <div>
-            <p className='text-[32px]'>Корзина</p>
-            <hr className='w-[85%] border-[1.5px] mb-8 mt-3'/>
-            <div className='max-h-[400px] overflow-scroll mb-8'>
+            <p className='text-[32px] px-[2%] '>Корзина</p>
+            <hr className='w-[88%] border-[1.5px] mb-8 mt-3 mx-[2%]'/>
+            <div className='max-h-[50vh]  overflow-scroll mb-8 flex flex-col gap-6 px-[2%] py-[2%] rounded-[5px] bg-[#2b1f0e] custom-scroll'>
               {productArr.length ? (
                 productArr.map((item, i) => {
                   return (
@@ -89,16 +126,61 @@ const Cart = () => {
           <div className='flex justify-between'>
             <button
               className="main_button-white w-[40%] max-[500px]:w-[45%] text-white py-4 px-6 max-[1000px]:text-[10px] min-h-[36px] rounded"
-              onClick={closeModal}
+              onClick={handleCloseModal}
             >
               Продовжити покупки
             </button>
             <button
-              className="main_button-white w-[40%] max-[500px]:w-[45%] text-white py-4 px-6 max-[1000px]:text-[10px] min-h-[36px] rounded"
+              className="main_button-white w-[40%] max-[500px]:w-[45%] text-white py-4 px-6 
+              max-[1000px]:text-[10px] min-h-[36px] rounded"
+              onClick={handleOpenSendModal}
             >
               Оформити замовлення
             </button>
           </div>
+        </div>
+      </Modal>
+
+      {/*Send modal*/}
+
+      <Modal isOpen={isSendModalOpen} onClose={handleCloseSendModal}>
+        <div className='w-full h-full px-[2%] pt-[5%] pb-[4%] flex flex-col justify-between'>
+        <p className='text-[32px] mb-4 '>Корзина</p>
+        <div>
+            <label className="block mb-2 text-3xl font-medium ">Імʼя</label>
+            <input
+              type="name"
+              className={` ${
+                nameIsValid ? '' : 'border-main-red'
+              }h-[45px] border-2 text-xl  border-white
+              rounded-md  p-2.5 bg-transparent w-full`}
+              placeholder="Ім`я"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {!nameIsValid && <label className="block mt-2 text-[#f53131] text-[12px] font-medium ">Введіть Імʼя!</label>}
+          </div>
+          <div className="my-8 mb-12">
+            <label className="block mb-2 text-3xl font-medium ">Телефон</label>
+            <input
+              type="tel"
+              className={`${
+                phoneIsValid ? '' : 'border-main-red'
+              } h-[45px] text-xl rounded-md p-2.5 border-2 border-white bg-transparent w-full`}
+              placeholder="(097)-743-23-56"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            {!phoneIsValid && <label className="block mt-2 text-[#f53131] text-[12px] font-medium ">Введіть правильний номер!</label>}
+          </div>
+          <button
+            className="text-xl main_button-white w-full h-[40px]"
+            onClick={(e) => handleOrderButtonClick(e)}
+          >
+            Передзвонити мені
+          </button>
         </div>
       </Modal>
     </div>

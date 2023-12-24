@@ -4,6 +4,7 @@ import { createSelector } from '@reduxjs/toolkit';
 
 const initialState = {
   isOpen: false,
+  sendModal: false,
   items: [],
 };
 
@@ -13,20 +14,32 @@ export const cartSlice = createSlice({
   reducers: {
     openCart: (state) => {
       state.isOpen = true;
+      setTimeout(()=> {
+        document.body.style.overflow = 'hidden';
+      },100)
     },
     closeCart: (state) => {
       state.isOpen = false;
+      state.sendModal = false;
+      document.body.style.overflow = 'auto';
     },
     toggleCart: (state) => {
       state.isOpen = !state.isOpen;
+      if(state.isOpen){
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100vh';
+      } else {
+        document.body.style.overflow = 'auto';
+        document.body.style.height = 'auto';
+      }
     },
     addToCart: (state, action) => {
       const { id, quantity } = action.payload;
-      const existingItem = state.items.find((item) => item.id === id);
+      const existingItem = state.items.find((item) => item.uid === id);
       if (existingItem) {
         existingItem.price *= quantity; 
       } else {
-        state.items.push(action.payload);
+        state.items = [...state.items, action.payload]
       }
 
       // Update localStorage
@@ -53,9 +66,18 @@ export const cartSlice = createSlice({
     initializeCartFromStorage: (state) => {
       state.items = JSON.parse(localStorage.getItem('cart')) || [];
     },
+
+    openSendModal: (state) => {
+      state.sendModal = true;
+      state.isOpen = false;
+    },
+    closeSendModal: (state) => {
+      state.sendModal = false;
+      document.body.style.overflow = 'auto';
+    }
   },
 });
-
+export const selectIsSendModalOpen = (state) => state.cart.sendModal;
 export const selectIsCartOpen = (state) => state.cart.isOpen;
 export const selectCartItems = (state) => state.cart.items;
 
@@ -67,6 +89,8 @@ export const {
   removeFromCart,
   changeQuantity,
   initializeCartFromStorage,
+  openSendModal,
+  closeSendModal,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

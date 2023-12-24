@@ -18,9 +18,9 @@ export default function Navbar() {
 
     useEffect(()=>{
       if(open){
-        document.body.style.minWidth = 'auto';
+        document.body.style.overflow = 'hidden';
       } else {
-        document.body.style.minWidth = '400px';
+        document.body.style.overflow = 'auto';
       }
     },[open])
       return (
@@ -32,7 +32,7 @@ export default function Navbar() {
         <Image src={brg} alt="" className="min-[720px]:hidden mr-3" />
         </div>  
           <div className={`absolute z-[55] top-[0] right-0 ${open ? '' : 'hidden'}`}>
-            <div className="absolute top-0 right-0 w-screen h-screen bg-[#130E04]">
+            <div className="absolute top-0 right-0 w-screen h-screen max-[400px]:w-[400px] max-[400px]:h-[1000px] bg-[#130E04]">
             <Image src={X} alt="" width={25} className="absolute right-[18%] top-[28px]" onClick={handleOnClose} />
             <ul className="menu menu-horizontal self-center flex flex-col items-end gap-8 text-[30px] mr-[9%] font-bold pt-[100px]">
               <li onClick={handleOnClose}><Link href='/shop' className="hover:text-[#EBAF5A] active:text-[#EBAF5A] mx-3">Магазин</Link></li>
