@@ -25,7 +25,7 @@ export default function Navbar() {
             <ul className=" divide-x divide-gray-600 self-center flex items-center gap-8 max-[720px]:hidden">
               <li><NextLink href='/shop' className="pl-4 hover:text-yellow-500 !active:text-yellow-500 mx-3 text-[13px]">Магазин</NextLink></li>
               <li><NextLink
-                    href={`${typeof window !== 'undefined' && window.location.pathname === '/' || '' ? 'https://https://apertura-front-new.vercel.app//#section-to-scroll' : 'https://https://apertura-front-new.vercel.app//#section-to-scroll'}`}
+                    href={`${typeof window !== 'undefined' && window.location.pathname === '/' || '' ? 'https://https://apertura-front-new.vercel.app/#section-to-scroll' : 'https://https://apertura-front-new.vercel.app/#section-to-scroll'}`}
                     className="pl-4 hover:text-yellow-500 mx-3 !active:text-yellow-500 text-[13px]"
                   >
                     Зворотній зв&apos;язок
