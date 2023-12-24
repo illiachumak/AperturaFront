@@ -16,7 +16,9 @@ const Cart = () => {
   const isSendModalOpen = useSelector(selectIsSendModalOpen)
   const dispatch = useDispatch();
 
-
+  const [email, setEmail] = useState('');
+  const [emailIsValid, setEmailIsValid] = useState(true);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [phoneIsValid, setPhoneIsValid] = useState(true);
@@ -25,7 +27,14 @@ const Cart = () => {
   const validatePhoneNumber = () => {
     setPhoneIsValid(phoneRegex.test(phone));
   };
+  const validateEmail = () => {
+    setEmailIsValid(emailRegex.test(email));
+  };
+  const validateName = () => {
+    setNameIsValid(name.trim());
+  }
 
+  
   const handleOrderButtonClick = (e) => {
     e.preventDefault();
     
@@ -72,6 +81,19 @@ const Cart = () => {
     dispatch(initializeCartFromStorage());
   }, [isOpen]);
 
+  const calculateTotalPrice = () => {
+    const total = productArr.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return total;
+  };
+  
+  useEffect(()=>{
+    return ()=>{
+      setEmailIsValid(true)
+      setPhoneIsValid(true)
+      setNameIsValid(true)
+    }
+  },[])
+
   return (
     <div>
       <Modal isOpen={isOpen} onClose={handleCloseModal}>
@@ -95,7 +117,7 @@ const Cart = () => {
                           </div>
                         </div>
                         <div>
-                        <p className='text-[16px]' onClick={()=> handleLoading(true)}>Ціна: <b>{item.price*item.quantity}</b></p>
+                        <p className='text-[16px]' onClick={()=> handleLoading(true)}>Ціна: <b>{item.price*item.quantity} грн</b></p>
                         <div className='w-full flex justify-between items-center'>
                           <div className='flex w-1/2 justify-between items-center'>
                             <p>
@@ -123,6 +145,11 @@ const Cart = () => {
               )}
             </div>
           </div>
+          {productArr && <div className='w-full flex gap-4 items-center mb-4'>
+            <p className='text-[20px]'>Загальна ціна:</p>
+            <p className='text-[20px]'>{calculateTotalPrice()} грн</p>
+          </div>}
+
           <div className='flex justify-between'>
             <button
               className="main_button-white w-[40%] max-[500px]:w-[45%] text-white py-4 px-6 max-[1000px]:text-[10px] min-h-[36px] rounded"
@@ -146,6 +173,25 @@ const Cart = () => {
       <Modal isOpen={isSendModalOpen} onClose={handleCloseSendModal}>
         <div className='w-full h-full px-[2%] pt-[5%] pb-[4%] flex flex-col justify-between'>
         <p className='text-[32px] mb-4 '>Корзина</p>
+        <div className="my-8 mb-8">
+    <label className="block mb-2 text-3xl font-medium">Електронна пошта</label>
+    <input
+      type="email"
+      className={`${
+        emailIsValid ? '' : 'border-main-red'
+      } h-[45px] text-xl rounded-md p-2.5 border-2 border-white bg-transparent w-full`}
+      placeholder="apertura@gmail.com"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      onBlur={validateEmail}
+    />
+    {!emailIsValid && (
+      <label className="block mt-2 text-[#f53131] text-[12px] font-medium">
+        Введіть правильну електронну пошту!
+      </label>
+    )}
+  </div>
+
         <div>
             <label className="block mb-2 text-3xl font-medium ">Імʼя</label>
             <input
@@ -157,6 +203,7 @@ const Cart = () => {
               placeholder="Ім`я"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onBlur={validateName}
             />
             {!nameIsValid && <label className="block mt-2 text-[#f53131] text-[12px] font-medium ">Введіть Імʼя!</label>}
           </div>
@@ -172,6 +219,7 @@ const Cart = () => {
               required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              onBlur={validatePhoneNumber}
             />
             {!phoneIsValid && <label className="block mt-2 text-[#f53131] text-[12px] font-medium ">Введіть правильний номер!</label>}
           </div>
@@ -179,7 +227,7 @@ const Cart = () => {
             className="text-xl main_button-white w-full h-[40px]"
             onClick={(e) => handleOrderButtonClick(e)}
           >
-            Передзвонити мені
+            Подзвонити мені
           </button>
         </div>
       </Modal>
