@@ -4,10 +4,10 @@ import './style.css';
 import { useRouter } from 'next/navigation';
 import _debounce from 'lodash/debounce';
 
-export default function DoubleSlider() {
+export default function DoubleSlider({minPrice, maxPrice}) {
     const router = useRouter();
-    const [min, setMin] = useState(0);
-    const [max, setMax] = useState(100);
+    const [min, setMin] = useState(minPrice);
+    const [max, setMax] = useState(maxPrice);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -15,20 +15,24 @@ export default function DoubleSlider() {
         const maxParam = urlParams.get('max');
         if ( minParam != '0'&& minParam !== null ) {
           setMin(Number(minParam));
+        } else{
+            setMin(minPrice)
         }
       
         if ( maxParam != '100' && maxParam !== null ) {
           setMax(Number(maxParam));
+        }else{
+            setMax(maxPrice)
         }
-      }, []);
+      }, [minPrice, maxPrice]);
       
 
-    const debouncedPushToRouter = _debounce(() => {
+    const debouncedPushToRouter = () => {
         const queryParams = new URLSearchParams(window.location.search);
         queryParams.set('min', min);
         queryParams.set('max', max);
         router.push(`${window.location.pathname}?${queryParams.toString()}`);
-    }, 350);
+    };
 
 
 
@@ -45,16 +49,16 @@ export default function DoubleSlider() {
                         type="range"
                         value={min}
                         onChange={(e) => setMin(e.target.value)}
-                        min="0"
-                        max="100"
+                        min={minPrice}
+                        max={maxPrice}
                     />
                     <input
                         id="toSlider"
                         type="range"
                         value={max}
                         onChange={(e) => setMax(e.target.value)}
-                        min="0"
-                        max="100"
+                        min={minPrice}
+                        max={maxPrice}
                     />
                 </div>
             </div>

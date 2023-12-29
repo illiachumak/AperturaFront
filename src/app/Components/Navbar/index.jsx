@@ -25,7 +25,7 @@ export default function Navbar() {
             <ul className=" divide-x divide-gray-600 self-center flex items-center gap-8 max-[720px]:hidden">
               <li><NextLink href='/shop' className="pl-4 hover:text-yellow-500 !active:text-yellow-500 mx-3 text-[13px]">Магазин</NextLink></li>
               <li><NextLink
-                    href={`${typeof window !== 'undefined' && window.location.pathname === '/' || '' ? 'https://https://apertura-front-new.vercel.app/#section-to-scroll' : 'https://https://apertura-front-new.vercel.app/#section-to-scroll'}`}
+                    href={`${typeof window !== 'undefined' && window.location.pathname === '/' || '' ? `/#section-to-scroll` : '/#section-to-scroll'}`}
                     className="pl-4 hover:text-yellow-500 mx-3 !active:text-yellow-500 text-[13px]"
                   >
                     Зворотній зв&apos;язок
@@ -45,10 +45,10 @@ export default function Navbar() {
             <div className="responsive-container">
               <div className="w-full">
               <ul className="py-5 px-8 text-white font flex justify-between items-center pt-6 w-full h-[32px] ">
-                <NextLink href='/shop/dveri'><li className=" hover:text-yellow-500">Двері</li></NextLink>
-                <NextLink href='/shop/stinovi-paneli'><li className="hover:text-yellow-500">Стінові панелі</li></NextLink>
-                <NextLink href='/shop/profile'><li className="hover:text-yellow-500">Профіль</li></NextLink>
-                <NextLink href='/shop/furnitura'><li className="hover:text-yellow-500">Фурнітура</li></NextLink>
+                <NextLink href='/shop/1'><li className=" hover:text-yellow-500">Двері</li></NextLink>
+                <NextLink href='/shop/2'><li className="hover:text-yellow-500">Стінові панелі</li></NextLink>
+                <NextLink href='/shop/3'><li className="hover:text-yellow-500">Профіль</li></NextLink>
+                <NextLink href='/shop/4'><li className="hover:text-yellow-500">Фурнітура</li></NextLink>
               </ul>
               </div>
             </div>

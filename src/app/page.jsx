@@ -6,27 +6,28 @@ import about from './assets/shop/about.png'
 import CategoryItem from "./Components/CategoryItem"
 import MobileCategoryItem from "./Components/CategoryItem/mobileItem"
 import FeedbackSection from "./Components/FeedbackSection"
-export default function Home() {
+import { getCategories } from "./services/api"
 
+export default async function Home() {
+  const categories = await getCategories();
   return (
     <>
-      <main className="!pt-12 max-[750px]:!pt-4 responsive-container flex flex-col justify-between items-center">
+      <main className="!pt-12 max-[750px]:!pt-4 responsive-container body-container flex flex-col justify-between items-center">
         <Carousel />
 
         <div className="flex flex-col mb-6rem w-full">
           <h2 className="font-bold text-xl my-8 underline decoration-yellow-600 underline-offset-4  ">МАГАЗИН</h2>
           <div className="flex flex-row justify-between w-full gap-6 flex-wrap max-[1174px]:hidden">
-            <CategoryItem />
-            <CategoryItem />
-            <CategoryItem />
-            <CategoryItem />
-          </div>
-          <div className="flex flex-row justify-around w-full gap-6 flex-wrap min-[1174px]:hidden max-[750px]">
-            <MobileCategoryItem />
-            <MobileCategoryItem />
-            <MobileCategoryItem />
-            <MobileCategoryItem />
-          </div>
+          {categories.map((category, index) => (
+            <CategoryItem key={category.id + index} bodyObj={category}/>
+          ))}
+        </div>
+        <div className="flex flex-row justify-around w-full gap-6 flex-wrap min-[1174px]:hidden max-[750px]">
+          {categories.map((category, index) => (
+            <MobileCategoryItem key={category.id + index} bodyObj={category}/>
+          ))}
+        </div>
+
         </div>
       </main>
 

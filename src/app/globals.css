@@ -159,6 +159,10 @@ body{
   @apply w-[1200px] mx-auto max-[1280px]:w-[90%]
 }
 
+.body-container{
+  min-height: 85vh;
+}
+
 
 
 .main_button{

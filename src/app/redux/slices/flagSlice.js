@@ -10,8 +10,11 @@ export const flagSlice = createSlice({
   initialState,
   reducers: {
     setLoading: (state, action) => {
+      console.log('flag changed')
       state.isLoading = action.payload;
       if (action.payload) {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         document.body.style.height = '100vh';
         document.body.style.overflow = 'hidden';
       } else {

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import v2 from '../../../assets/v2.svg';
 import SidebarMobile from '../mobileSidebar';
 
-export default function CategoriesMobile({ category }) {
+export default function CategoriesMobile({ category, categories }) {
   
   const [open, setOpen] = useState(false);
 
@@ -24,7 +24,7 @@ export default function CategoriesMobile({ category }) {
         <div className="bg-black opacity-50  w-screen h-full max-[400px]:w-[400px]  z-10" onClick={() => setOpen(false)}></div>
         <div className="absolute top-0 left-0 bg-[#130E04] w-[70%] h-full pr-8">
           <div className="pl-[30px] pt-[30px]" onClick={(e) => e.stopPropagation()}>
-            <SidebarMobile category={category} />
+            <SidebarMobile category={category} categories={categories} />
           </div>
         </div>
       </div>
