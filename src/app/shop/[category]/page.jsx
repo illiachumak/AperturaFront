@@ -36,7 +36,7 @@ function Shop({ params }) {
     };
 
     const getCategoryProducts = async (categoryId, params) => {
-      const url = `${baseURL}categories/${categoryId}${params ? `${params}` : '/'}`;
+      const url = `${baseURL}categories/${categoryId}/${params ? `${params}` : ''}`;
       const response = await axios.get(url);
       console.log('url',url)
       console.log('data', response.data)
@@ -68,7 +68,7 @@ function Shop({ params }) {
 
   return (
     <>
-      <div className="responsive-container body-container mt-10">
+      <div className="responsive-container body-container my-10">
         <div className="flex justify-between items-center w-full mb-8">
           <h2 className="block text-xl font-bold fz-16 max-[783px]:hidden">{selectedCategory?.name}</h2>
           <CategoriesMobile category={params.category} categories={categories}/>

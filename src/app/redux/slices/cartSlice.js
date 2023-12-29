@@ -2,6 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { createSelector } from '@reduxjs/toolkit';
 
+// Generate a unique cartId
+const generateCartId = () => {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+};
+
 const initialState = {
   isOpen: false,
   sendModal: false,
@@ -35,34 +40,35 @@ export const cartSlice = createSlice({
     },
     addToCart: (state, action) => {
       const { id, quantity } = action.payload;
-      const existingItem = state.items.find((item) => item.uid === id);
+      const cartId = generateCartId();
+      const existingItem = state.items.find((item) => item.cartId === cartId);
       if (existingItem) {
         existingItem.price *= quantity; 
       } else {
-        state.items = [...state.items, action.payload]
+        state.items = [...state.items, { ...action.payload, cartId }];
       }
 
       // Update localStorage
       localStorage.setItem('cart', JSON.stringify(state.items));
     },
     removeFromCart: (state, action) => {
-      const itemId = action.payload;
-      state.items = state.items.filter((item) => item.id !== itemId);
+      const cartId = action.payload;
+      state.items = state.items.filter((item) => item.cartId !== cartId);
       if(state.items.length === 0 ) state.isOpen = false
       // Update localStorage
       localStorage.setItem('cart', JSON.stringify(state.items));
     },
     changeQuantity: (state, action) => {
-      const { id, quantity } = action.payload;
-      const existingItem = state.items.find((item) => item.uid === id);
+      const { cartId, quantity } = action.payload;
+      const existingItem = state.items.find((item) => item.cartId === cartId);
       if (existingItem) {
         if (existingItem.quantity === 1 && quantity === -1)  return;
         else{
           existingItem.quantity += quantity;
           localStorage.setItem('cart', JSON.stringify(state.items));
         }
-    }
-  },
+      }
+    },
     initializeCartFromStorage: (state) => {
       state.items = JSON.parse(localStorage.getItem('cart')) || [];
     },

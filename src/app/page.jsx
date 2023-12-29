@@ -47,8 +47,8 @@ export default async function Home() {
               технологій, щоб забезпечити максимальну тривалість служби та зберегти свою привабливість з роками.</p>
 
             <div className="flex justify-between">
-              <div className=" text-xl main_button w-[250px]">Магазин</div>
-              <div className=" text-xl main_button w-[250px]">Зворотній звʼязок</div>
+              <Link href='/shop'><div className=" text-xl main_button w-[250px]">Магазин</div></Link>
+              <Link href='/#section-to-scroll'><div className=" text-xl main_button w-[250px]">Зворотній звʼязок</div></Link>
             </div>
           </div>
         </div>

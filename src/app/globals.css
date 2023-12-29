@@ -215,6 +215,7 @@ color: #FFF;
     width: 300px;
     height: auto ;
     margin-bottom: 1rem;
+    object-fit: cover;
   }
 
   .options-block {

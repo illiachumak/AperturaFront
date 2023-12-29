@@ -8,7 +8,7 @@ export default function Shop() {
   const router = useRouter()
 
   useLayoutEffect(()=> {
-    router.push('/shop/doors')
+    router.push('/shop/1')
   },[])
 
   return (

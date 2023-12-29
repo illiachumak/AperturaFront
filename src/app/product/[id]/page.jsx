@@ -5,352 +5,38 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { addToCart, openCart } from '../../redux/slices/cartSlice';
-
-let dummyData = {
-  uid: '2jgheeeej',
-  name: 'Міжкімнатні двері',
-  category: 'doors',
-  description: 'Lorem ipsum...',
-  price: 2000,
-  img: 'imgUrl',
-  optionals: [
-    {
-      name: 'Ручки',
-      options: [
-        {
-          name: 'ручка 2322',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2323',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2324',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2325',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2326',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2327',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ше шось',
-      options: [
-        {
-          name: 'Ше шось 2322',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2323',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2324',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2325',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2326',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2327',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ручки',
-      options: [
-        {
-          name: 'ручка 2322',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2323',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2324',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2325',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2326',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2327',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ше шось',
-      options: [
-        {
-          name: 'Ше шось 2322',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2323',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2324',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2325',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2326',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2327',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ручки',
-      options: [
-        {
-          name: 'ручка 2322',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2323',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2324',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2325',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2326',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2327',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ше шось',
-      options: [
-        {
-          name: 'Ше шось 2322',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2323',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2324',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2325',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2326',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2327',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ручки',
-      options: [
-        {
-          name: 'ручка 2322',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2323',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2324',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2325',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2326',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2327',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ше шось',
-      options: [
-        {
-          name: 'Ше шось 2322',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2323',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2324',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2325',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2326',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2327',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ручки',
-      options: [
-        {
-          name: 'ручка 2322',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2323',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2324',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2325',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2326',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2327',
-          price: 2000,
-        },
-        {
-          name: 'ручка 2328',
-          price: 2000,
-        },
-      ]
-    },
-    {
-      name: 'Ше шось',
-      options: [
-        {
-          name: 'Ше шось 2322',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2323',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2324',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2325',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2326',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2327',
-          price: 2000,
-        },
-        {
-          name: 'Ше шось 2328',
-          price: 2000,
-        },
-      ]
-    },
-  ]
-};
+import { baseURL } from '../../services/base';
+import { Skeleton } from '@mui/material';
+import axios from 'axios';
+import { blurDataURL } from '../../services/base';
 
 export default function Shop({ params }) {
   const router = useRouter()
   const dispatch = useDispatch()
   const [optionsToSend, setOptionsToSend] = useState([]);
+  const [data, setData] = useState(null);
+  const [loaded, setLoaded] = useState(false)
+  useEffect(()=>{
+    const fetchData = async (id) => {
+
+    const getProductById = async (id) => {
+      const url = `${baseURL}product/${id}/`;
+      const response = await axios.get(url);
+      console.log('url',url)
+      console.log('data', response.data)
+      if (!response.ok) {
+        if (response.status === 401) {
+        }
+      }
+      return response.data;
+    };
+    const data = await getProductById(id)
+    setData(data)
+  }
+
+  fetchData(params.id)
+  },[])
+
   const handleOptionChange = (item, selectedValue) => {
     console.log('Selected Value:', selectedValue);
   
@@ -387,12 +73,14 @@ export default function Shop({ params }) {
   };
 
   const handleOrderButtonClick = () => {
-    const areAllOptionsSelected = dummyData.optionals.every((item) => {
+    const areAllOptionsSelected = data.modifications.every((item) => {
       return optionsToSend.some((option) => option.name === item.name);
     });
+    
 
     if (areAllOptionsSelected) {
-      dispatch(addToCart({...dummyData, optionals: optionsToSend, quantity: 1, price: optionsToSend.reduce((total, option) => total + option.price, 0)+dummyData.price}))
+      dispatch(addToCart({...data, modifications: optionsToSend, quantity: 1, 
+        price: optionsToSend.reduce((total, option) => total + Number(option.price), 0) + Number(data?.price)}))
       dispatch(openCart())
     } else {
       // Display an alert if not all options are selected
@@ -403,16 +91,35 @@ export default function Shop({ params }) {
 
   return (
     <div className="my-12 responsive-container">
-        <div className="min-640px-hidden">
-        <p className="mb-8 text-[24px] uppercase font-bold">Приховані двері 33456</p>
-        </div>
+      <div className="min-640px-hidden">
+        <p className="mb-8 text-[24px] uppercase font-bold">{data?.title}</p>
+      </div>
       <div className="flex justify-between gap-[2%] max-[640px]:flex-col max-[640px]:items-center image-options-block">
-        <Image src={productImg} alt="" className="image-container basis-[20%] h-[500px] rounded-[5px] max-[640px]:basis-[50%]" />
-
-        <div className="options-block h-[500px] basis-[70%] min-[900px]:!basis-[45%] flex flex-col overflow-scroll max-[640px]:hidden">
-          <p className="mb-4 text-[22px] uppercase font-bold">Приховані двері 33456</p>
-          <div className="flex justify-between flex-wrap basis-full overflow-scroll">
-            {dummyData.optionals.map((item, i) => {
+        <div className='relative image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
+          <Image
+            src={data?.image_preview}
+            blurDataURL={blurDataURL}
+            placeholder="blur"
+            alt=""
+            width={300}
+            height={500}
+            onLoadingComplete={() => setLoaded(true)}
+            className="image-container object-cover h-[500px] rounded-[5px] max-[640px]:basis-[50%]"
+          />
+          {!loaded && (
+            <Skeleton
+              sx={{ bgcolor: 'grey.100' }}
+              variant="rectangular"
+              width="100%"
+              height="100%"
+              className='absolute top-0 left-0 rounded-xs '
+            />
+          )}
+        </div>
+        <div className="options-block max-h-[500px] basis-[70%] min-[900px]:!basis-[45%] flex flex-col overflow-scroll max-[640px]:hidden">
+          <p className="mb-4 text-[22px] uppercase font-bold">{data?.title}</p>
+          <div className="flex justify-between flex-wrap overflow-scroll">
+            {data && data?.modifications && data.modifications.map((item, i) => {
               const selectedOption = optionsToSend.find(option => option.name === item.name)?.value || '';
               return (
                 <label className="form-control w-full flex-shrink" key={item.name + i}>
@@ -442,7 +149,7 @@ export default function Shop({ params }) {
           </div>
           <div className="mt-5 w-full flex-shrink-0 h-[120px] bg-color-prim1 rounded-[5px] min-[900px]:hidden p-4 py-5 flex items-center justify-between gap-[10px]">
             <div className='h-full overflow-hidden'>
-              <p className="text-[14px] font-bold mb-4">Ціна дверного полотна 3450₴</p>
+              <p className="text-[14px] font-bold mb-4">Ціна дверного полотна {data?.price} ₴</p>
               <hr className="border-t border-gray-300 my-4 w-3/4" />
               <div className="flex flex-col h-[40%] overflow-x-scroll max-w-full">
                 {optionsToSend.map((option, i) => (
@@ -455,7 +162,13 @@ export default function Shop({ params }) {
             <div className='flex h-full flex-col justify-between'>
               <div className="flex gap-4 font-bold">
                 <p className='text-[14px]'>Загальна ціна</p>
-                <p className='text-[14px]'>{optionsToSend.reduce((total, option) => total + option.price, 0) + 3450}₴</p>
+                <p className='text-[14px]'>
+                  {(
+                    optionsToSend.reduce((total, option) => total + Number(option.price), 0) +
+                    Number(data?.price)
+                  ).toFixed(2)}
+                  ₴
+                </p>
               </div>
               <button className="main_button-white w-full text-white py-2 px-4 mt-4 rounded" onClick={() => handleOrderButtonClick()}>Замовити</button>
             </div>
@@ -464,7 +177,7 @@ export default function Shop({ params }) {
 
         <div className="basis-[300px] flex flex-col !justify-between flex-shrink-0 h-[500px] bg-color-prim1 rounded-[5px] max-[900px]:hidden p-8 price-summary-block">
           <div>
-            <p className="text-[18px] font-bold mb-4">Ціна дверного полотна<br/>3450₴</p>
+            <p className="text-[18px] font-bold mb-4">Ціна дверного полотна<br/>{Number(data?.price)} ₴</p>
             <hr className="border-t border-gray-300 my-4 w-3/4" />
             {optionsToSend.map((option, i) => (
               <div key={option.name + i} className="flex justify-between mb-2">
@@ -475,18 +188,23 @@ export default function Shop({ params }) {
           <div>
             <div className="flex gap-4 font-bold">
               <p className='text-[16px]'>Загальна ціна</p>
-              <p className='text-[16px]'>{optionsToSend.reduce((total, option) => total + option.price, 0)+3450}₴</p>
+              <p className='text-[16px]'>
+                {(
+                  optionsToSend.reduce((total, option) => total + Number(option.price), 0) +
+                  Number(data?.price)
+                ).toFixed(2)} ₴
+              </p>
             </div>
-            <button className="main_button-white w-full text-white py-2 px-4 mt-4 rounded"  onClick={() => handleOrderButtonClick()}>Замовити</button>
+            <button className="main_button-white w-full text-white py-2 px-4 mt-4 rounded" onClick={() => handleOrderButtonClick()}>Замовити</button>
           </div>
         </div>
       </div>
 
       <div className="flex justify-between flex-wrap overflow-scroll min-640px-hidden">
-        {dummyData.optionals.map((item, i) => {
+        {data && data?.modifications && data.modifications.map((item, i) => {
           const selectedOption = optionsToSend.find(option => option.name === item.name)?.value || '';
           return (
-            <label className="form-control w-full flex-shrink" key={item.name + i}>
+            <label className="form-control w-full flex-shrink" key={item.name + i + item.id}>
               <div className="label">
                 <span className="">{item.name}</span>
               </div>
@@ -514,30 +232,36 @@ export default function Shop({ params }) {
 
       <div className="mt-5 w-full flex-shrink-0 h-[160px] bg-color-prim1 rounded-[5px] min-[640px]:hidden p-4 py-5 flex items-center justify-between gap-[10px]">
         <div className='h-full overflow-hidden'>
-          <p className="min-[450px]:text-[14px] font-bold mb-4">Ціна дверного полотна 3450₴</p>
+          <p className="min-[450px]:text-[14px] font-bold mb-4">Ціна дверного полотна <br/>{data?.price} ₴</p>
           <hr className="border-t border-gray-300 my-4 w-3/4" />
           <div className="flex flex-col h-[40%] overflow-x-scroll max-w-full">
             {optionsToSend.map((option, i) => {
-              if(i === 1) return (
+              if (i === 1) return (
                 <div key={option.name + i} className="flex-shrink-0 flex justify-between px-2">
                   <p>...</p>
                 </div>
               );
-              if(i >= 1) return 
+              if (i >= 1) return
               return (
                 <div key={option.name + i} className="flex-shrink-0 flex px-2">
                   <p>+{option.price}₴ - {option.value} </p>
                 </div>
-              )}
-            )}
+              )
+            })}
           </div>
         </div>
-        <div className='flex h-full flex-col justify-between'> 
+        <div className='flex h-full flex-col justify-between'>
           <div className="flex gap-4 font-bold">
             <p className='min-[450px]:text-[14px]'>Загальна ціна</p>
-            <p className='min-[450px]:text-[14px]'>{optionsToSend.reduce((total, option) => total + option.price, 0) + 3450}₴</p>
+            <p className='min-[450px]:text-[14px]'>
+              {(
+                optionsToSend.reduce((total, option) => total + Number(option.price), 0) +
+                Number(data?.price)
+              ).toFixed(2)}
+               ₴
+            </p>
           </div>
-          <button className="main_button-white w-full text-white py-2 px-4 mt-4 rounded"  onClick={() => handleOrderButtonClick()}>Замовити</button>
+          <button className="main_button-white w-full text-white py-2 px-4 mt-4 rounded" onClick={() => handleOrderButtonClick()}>Замовити</button>
         </div>
       </div>
 
@@ -546,7 +270,7 @@ export default function Shop({ params }) {
         <p className="text-[16px] max-[900px]:text-[12px] max-[640px]">
           Двері прихованого монтажу - це стильний та сучасний варіант для вашого приміщення. Їх особливість
           полягає в тому, що вони монтується без видимих зовнішніх елементів кріплення, що створює ефект
-          безперервного поверхневого покриття. Ці двері виглядають елегантно та надають інтер&apos;єру сучасний вигляд,
+          безперервного поверхневого покриття. Ці двері виглядають елегантно та надають інтер'єру сучасний вигляд,
           а також можуть бути виготовлені з різних матеріалів та варіантів декору, щоб відповідати вашому
           стилю та уподобанням.
         </p>

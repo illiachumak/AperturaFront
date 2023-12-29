@@ -8,7 +8,7 @@ import { closeCart, selectIsCartOpen, initializeCartFromStorage,
    removeFromCart, changeQuantity, selectIsSendModalOpen, openSendModal, closeSendModal } from '../../redux/slices/cartSlice';
 import productImg from '../../assets/product/door.png';
 import Image from 'next/image';
-import {setLoading} from '../../redux/slices/flagSlice'
+
 
 const Cart = () => {
   const isOpen = useSelector(selectIsCartOpen);
@@ -22,7 +22,8 @@ const Cart = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [phoneIsValid, setPhoneIsValid] = useState(true);
-  const [nameIsValid, setNameIsValid] = useState(true)
+  const [nameIsValid, setNameIsValid] = useState(true);
+  const [openRegisteredModal, setOpenRegisteredModal] = useState(false);
   const phoneRegex = /^(\+38)?\d{10}$/;
   const validatePhoneNumber = () => {
     setPhoneIsValid(phoneRegex.test(phone));
@@ -47,7 +48,7 @@ const Cart = () => {
     }
   
     if (name.trim() && phoneIsValid) {
-      setIsOpen(true)
+      setOpenRegisteredModal(true)
     }
   };
 
@@ -74,9 +75,6 @@ const Cart = () => {
   const decreaseQuantity = (productId) => {
     dispatch(changeQuantity({ id: productId, quantity: -1 }));
   };
-  const handleLoading = (bool) => {
-    dispatch(setLoading(bool))
-  }
   useEffect(() => {
     dispatch(initializeCartFromStorage());
   }, [isOpen]);
@@ -105,19 +103,19 @@ const Cart = () => {
               {productArr.length ? (
                 productArr.map((item, i) => {
                   return (
-                    <div key={item?.uid + i} className='w-[85%] flex justify-between'>
-                      <Image src={productImg} alt="door" className=' max-w-[180px] w-[30%] h-auto'/>
+                    <div key={item?.cartId + i} className='w-[85%] flex justify-between'>
+                      <Image src={item?.image_preview} alt="door" width={180} height={200} className='rounded-lg max-w-[180px] w-[30%] h-auto'/>
                       <div className='w-[65%] flex flex-col justify-between'>
                         <div>
-                          <p className='text-[24px] mb-3'>{item.name}</p>
+                          <p className='text-[24px] mb-3'>{item.title}</p>
                           <div className='w-full flex flex-wrap justify-between basis-[65%] overflow-scroll'>
-                            {item.optionals.map((option, i) => (
+                            {item && item.modifications.map((option, i) => (
                               <div className='w-[45%]' key={i}>{option.name} - {option.value}</div>
                             ))}
                           </div>
                         </div>
                         <div>
-                        <p className='text-[16px]' onClick={()=> handleLoading(true)}>Ціна: <b>{item.price*item.quantity} грн</b></p>
+                        <p className='text-[16px]'>Ціна: <b>{item.price*item.quantity} грн</b></p>
                         <div className='w-full flex justify-between items-center'>
                           <div className='flex w-1/2 justify-between items-center'>
                             <p>
@@ -130,7 +128,7 @@ const Cart = () => {
                           </div>
                           <button
                             className="main_button-white w-[40%] max-[500px]:w-[45%] text-white py-4 px-6 max-[1000px]:text-[10px] min-h-[36px] rounded"
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeItem(item.cartId)}
                           >
                             Видалити
                           </button>
@@ -173,7 +171,9 @@ const Cart = () => {
       <Modal isOpen={isSendModalOpen} onClose={handleCloseSendModal}>
         <div className='w-full h-full px-[2%] pt-[5%] pb-[4%] flex flex-col justify-between'>
         <p className='text-[32px] mb-4 '>Корзина</p>
-        <div className="my-8 mb-8">
+          {!openRegisteredModal ? (
+            <>
+          <div className="my-8 mb-8">
     <label className="block mb-2 text-3xl font-medium">Електронна пошта</label>
     <input
       type="email"
@@ -229,6 +229,10 @@ const Cart = () => {
           >
             Подзвонити мені
           </button>
+          </>) : (<>
+          <p className='my-8'>{name}, Ваше замовлення в обробці, ми вам перетелефонуємо на протязі 2 робочих днів!</p>
+          </>)}
+        
         </div>
       </Modal>
     </div>
