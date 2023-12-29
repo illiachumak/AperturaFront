@@ -7,10 +7,11 @@ import CategoryItem from "./Components/CategoryItem"
 import MobileCategoryItem from "./Components/CategoryItem/mobileItem"
 import FeedbackSection from "./Components/FeedbackSection"
 import { getCategories } from "./services/api"
-import { categories } from "./services/base"
+
 
 export default async function Home() {
 
+  const categories  = await getCategories()
   return (
     <>
       <main className="!pt-12 max-[750px]:!pt-4 responsive-container body-container flex flex-col justify-between items-center">

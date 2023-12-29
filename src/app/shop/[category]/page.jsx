@@ -26,7 +26,7 @@ function Shop({ params }) {
 
   const fetchShop = async (categoryId) => {
     const getCategories = async () => {
-      const response = await axios.get(`${baseURL}categories`);
+      const response = await axios.get(`${baseURL}categories/`);
       if (!response.ok) {
         if (response.status === 401) {
           throw new Error('Unauthorized');
@@ -36,7 +36,7 @@ function Shop({ params }) {
     };
 
     const getCategoryProducts = async (categoryId, params) => {
-      const url = `${baseURL}categories/${categoryId}${params ? `${params}` : ''}`;
+      const url = `${baseURL}categories/${categoryId}${params ? `${params}` : '/'}`;
       const response = await axios.get(url);
       console.log('url',url)
       console.log('data', response.data)
