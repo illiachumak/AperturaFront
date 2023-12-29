@@ -3,7 +3,7 @@ import { baseURL } from "./base"
 
 export const getCategories = async () => {
 
-    const revalidate =  3600*24;
+    const revalidate =  3600/2;
 
     const response = await fetch(`${baseURL}categories/`, {next: {revalidate: revalidate}});
 
