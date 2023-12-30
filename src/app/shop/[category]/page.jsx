@@ -8,13 +8,14 @@ import ShopCardButton from '../../Components/Buttons/shopCardButton';
 import SortOption from '../../Components/Sort';
 import CategoriesMobile from '../../Components/Sidebar/CategoriesMobile';
 import { useRouter } from 'next/navigation';
-import { baseURL, blurDataURL } from '../../services/base';
+import { baseURL, blurDataURL, categories } from '../../services/base';
 import axios from 'axios';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../redux/slices/flagSlice';
 import { Skeleton } from "@mui/material";
 import Loading from '../../Components/Loading';
+import { notFound } from 'next/navigation';
 
 function Shop({ params }) {
   const pathname = usePathname()
@@ -25,15 +26,13 @@ function Shop({ params }) {
   const [loaded, setLoaded] = useState(false)
   const router = useRouter();
 
+  const returnNotfound = () => {
+    notFound()
+  }
   const fetchCategories = async (categoryId) => {
     
     const getCategories = async () => {
       const response = await axios.get(`${baseURL}categories/`);
-      if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error('Unauthorized');
-        }
-      }
       return response.data;
     };
 
@@ -44,11 +43,6 @@ function Shop({ params }) {
     const getCategoryProducts = async (categoryId, params) => {
       const url = `${baseURL}categories/${categoryId}/${params ? `${params}` : ''}`;
       const response = await axios.get(url);
-      console.log('url',url)
-      console.log('data', response.data)
-      if (!response.ok) {
-        if (response.status === 401) {
-        }
       }
       return response.data;
     };
@@ -61,13 +55,16 @@ function Shop({ params }) {
       }
     };
     fetchData();
-  };
+  
  
   useEffect(() => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
      fetchCategories()
      fetchProducts(params.category)
+     if(!categories || categoryData){
+      returnNotfound()
+     }
   }, [pathname, searchParams]);
 
   const selectedCategory = categories.find((category) => category.id == params.category);

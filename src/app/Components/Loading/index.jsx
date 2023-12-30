@@ -11,7 +11,7 @@ export default function Loading() {
     document.documentElement.scrollTop = 0;
     dispatch(setLoading(true))
         return ()=>{
-          
+          dispatch(setLoading(false))
         }
   },[])
     const isLoading = useSelector(selectIsLoading)
