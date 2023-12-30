@@ -67,10 +67,10 @@ export const cartSlice = createSlice({
       }
     },
     addToCart: (state, action) => {
-      const { id, quantity, modifications } = action.payload;
+      const { id, quantity, modifications, image_preview } = action.payload;
       const cartId = generateCartId();
       const existingItemIndex = state.items.findIndex(
-        (item) => item.id === id && areModificationsEqual(item.modifications, modifications)
+        (item) => item.id === id && areModificationsEqual(item.modifications, modifications) && item.image_preview === image_preview
       );
     
       if (existingItemIndex !== -1) {

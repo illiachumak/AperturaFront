@@ -11,13 +11,17 @@ import axios from 'axios';
 import { blurDataURL } from '../../services/base';
 import Loading from '../../Components/Loading';
 import { setLoading } from '../../redux/slices/flagSlice';
+import React from 'react';
 
 export default function Shop({ params }) {
   const router = useRouter()
   const dispatch = useDispatch()
   const [optionsToSend, setOptionsToSend] = useState([]);
+  const [selectedColor, setSelectedColor] = useState('');
   const [data, setData] = useState(null);
   const [loaded, setLoaded] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState(false)
+
   useEffect(()=>{
     const fetchData = async (id) => {
 
@@ -38,6 +42,11 @@ export default function Shop({ params }) {
 
   fetchData(params.id)
   },[])
+
+  const handleColorChange = (colorObj) => {
+    setSelectedColor(colorObj)
+    console.log(selectedColor)
+  }
 
   const handleOptionChange = (item, selectedValue) => {
     console.log('Selected Value:', selectedValue);
@@ -81,6 +90,7 @@ export default function Shop({ params }) {
     
 
     if (areAllOptionsSelected) {
+      if(selectedColor) {data.image_preview = selectedColor.image[0].image}
       dispatch(addToCart({...data, modifications: optionsToSend, quantity: 1, 
         price: optionsToSend.reduce((total, option) => total + Number(option.price), 0) + Number(data?.price)}))
       dispatch(openCart())
@@ -98,8 +108,9 @@ export default function Shop({ params }) {
       <div className="min-640px-hidden">
         <p className="mb-8 text-[24px] uppercase font-bold">{data?.title}</p>
       </div>
-      <div className="flex justify-between gap-[2%] max-[640px]:flex-col max-[640px]:items-center image-options-block">
-        <div className='relative image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
+      <div className=" flex justify-between gap-[2%] max-[640px]:flex-col max-[640px]:items-center image-options-block">
+        <div className='relative'>
+          <div className='relative image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
           <Image
             src={data?.image_preview}
             alt=""
@@ -119,10 +130,60 @@ export default function Shop({ params }) {
               className='absolute top-0 left-0 rounded-xs '
             />
           )}
+          </div>
+
+          {selectedColor && (
+            <div className='absolute top-0 left-0 z-[8] image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
+            <Image
+              src={selectedColor.image[0].image}
+              alt=""
+              width={300}
+              height={500}
+              onLoadingComplete={() => {
+                setTimeout(()=>{dispatch(setLoading(false))}, 1000) 
+                setLoaded(true)}}
+              className={`image-container object-cover h-[500px] rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
+            />
+            {!loaded && (
+              <Skeleton
+                sx={{ bgcolor: 'grey.100' }}
+                variant="rectangular"
+                width="100%"
+                height="100%"
+                className='absolute top-0 left-0 rounded-xs '
+              />
+            )}
+            </div>
+          )}
         </div>
         <div className="options-block max-h-[500px] basis-[70%] min-[900px]:!basis-[45%] flex flex-col overflow-scroll max-[640px]:hidden">
           <p className="mb-4 text-[22px] uppercase font-bold">{data?.title}</p>
           <div className="flex justify-between flex-wrap overflow-scroll">
+          {data && data?.colors && (
+  <label className="form-control w-full flex-shrink" key="colors@@@3">
+    <div className="label flex justify-between w-full">
+      <span className="flex justify-between w-full">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
+    </div>
+       <div className="flex flex-wrap gap-4">
+        {data.colors.map((option, i) => (
+          <button
+            className="flex items-center"
+            type="button"
+            key={option.name + i}
+            onClick={() => handleColorChange(option)}
+          >
+            <Image src={option.preview_image} alt="" width={20} height={20} />
+            <span className="ml-2">{option.name}</span>
+          </button>
+        ))}
+      </div>
+    <div className="label">
+      <span className=""></span>
+    </div>
+  </label>
+)}
+
+            
             {data && data?.modifications && data.modifications.map((item, i) => {
               const selectedOption = optionsToSend.find(option => option.name === item.name)?.value || '';
               return (
