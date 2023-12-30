@@ -69,11 +69,11 @@ const Cart = () => {
   };
 
   const increaseQuantity = (productId) => {
-    dispatch(changeQuantity({ id: productId, quantity: 1 }));
+    dispatch(changeQuantity({ cartId: productId, quantity: 1 }));
   };
 
   const decreaseQuantity = (productId) => {
-    dispatch(changeQuantity({ id: productId, quantity: -1 }));
+    dispatch(changeQuantity({ cartId: productId, quantity: -1 }));
   };
   useEffect(() => {
     dispatch(initializeCartFromStorage());
@@ -122,8 +122,8 @@ const Cart = () => {
                               Кількість: <b>{item.quantity}</b>
                             </p>
                             <div className='flex flex-col gap-0'>
-                              <b className='cursor-pointer text-[14px]'  onClick={() => increaseQuantity(item.uid)}>+</b>
-                              <b className='cursor-pointer text-[14px]' onClick={() => decreaseQuantity(item.uid)}>-</b>
+                              <b className='cursor-pointer text-[14px]'  onClick={() => increaseQuantity(item.cartId)}>+</b>
+                              <b className='cursor-pointer text-[14px]' onClick={() => decreaseQuantity(item.cartId)}>-</b>
                             </div>
                           </div>
                           <button
