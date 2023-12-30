@@ -166,7 +166,7 @@ export default function Shop({ params }) {
       <span className="flex justify-between w-full">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
     </div>
        <div className="flex flex-wrap gap-4" >
-        {data.colors.map((option, i) => (
+        {data?.colors && data?.colors?.length && data.colors.map((option, i) => (
           <button
             className="flex items-center"
             type="button"
@@ -199,7 +199,7 @@ export default function Shop({ params }) {
                     <option disabled value="">
                       Вибрати
                     </option>
-                    {item.options.map((option, i) => (
+                    {item?.options.map((option, i) => (
                       <option value={option.name} key={option.name + i}>
                         {option.name}
                       </option>
@@ -217,7 +217,7 @@ export default function Shop({ params }) {
               <p className="text-[14px] font-bold mb-4">Ціна дверного полотна {data?.price} ₴</p>
               <hr className="border-t border-gray-300 my-4 w-3/4" />
               <div className="flex flex-col h-[40%] overflow-x-scroll max-w-full">
-                {optionsToSend.map((option, i) => (
+                {optionsToSend && optionsToSend.map((option, i) => (
                   <div key={option.name + i} className="flex-shrink-0 flex justify-between mb-2 px-2">
                     <p>+{option.price}₴ - {option.value} </p>
                   </div>
@@ -244,7 +244,7 @@ export default function Shop({ params }) {
           <div>
             <p className="text-[18px] font-bold mb-4">Ціна дверного полотна<br/>{Number(data?.price)} ₴</p>
             <hr className="border-t border-gray-300 my-4 w-3/4" />
-            {optionsToSend.map((option, i) => (
+            {optionsToSend && optionsToSend.map((option, i) => (
               <div key={option.name + i} className="flex justify-between mb-2">
                 <p>+{option.price}₴ - {option.value} </p>
               </div>
@@ -281,7 +281,7 @@ export default function Shop({ params }) {
                 <option disabled value="">
                   Вибрати
                 </option>
-                {item.options.map((option, i) => (
+                {item.options && item.options.map((option, i) => (
                   <option value={option.name} key={option.name + i}>
                     {option.name}
                   </option>
@@ -300,7 +300,7 @@ export default function Shop({ params }) {
           <p className="min-[450px]:text-[14px] font-bold mb-4">Ціна дверного полотна <br/>{data?.price} ₴</p>
           <hr className="border-t border-gray-300 my-4 w-3/4" />
           <div className="flex flex-col h-[40%] overflow-x-scroll max-w-full">
-            {optionsToSend.map((option, i) => {
+            {optionsToSend && optionsToSend.map((option, i) => {
               if (i === 1) return (
                 <div key={option.name + i} className="flex-shrink-0 flex justify-between px-2">
                   <p>...</p>

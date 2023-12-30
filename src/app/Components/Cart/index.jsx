@@ -100,7 +100,7 @@ const Cart = () => {
             <p className='text-[32px] px-[2%] '>Корзина</p>
             <hr className='w-[88%] border-[1.5px] mb-8 mt-3 mx-[2%]'/>
             <div className='max-h-[50vh]  overflow-scroll mb-8 flex flex-col gap-6 px-[2%] py-[2%] rounded-[5px] bg-[#2b1f0e] custom-scroll'>
-              {productArr.length ? (
+              {productArr && productArr.length ? (
                 productArr.map((item, i) => {
                   return (
                     <div key={item?.cartId + i} className='w-[85%] flex justify-between'>

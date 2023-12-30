@@ -85,7 +85,7 @@ const Sidebar = ({ categories, category, minPrice, maxPrice}) => {
               </button>
               {openCategories == categoryItem.id && (
                 <ul>
-                  {categoryItem.subcategories.map((subcategory) => (
+                  {categoryItem?.subcategories && categoryItem.subcategories.map((subcategory) => (
                     <li key={subcategory.id}>
                       <button
                         className={`text-left pl-8 w-full py-3 rounded-b-xs ${

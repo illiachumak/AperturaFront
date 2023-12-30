@@ -85,7 +85,7 @@ function Shop({ params }) {
         <div className="flex w-full">
           <Sidebar category={params.category} categories={categories} minPrice={categoryData.min_price} maxPrice={categoryData.max_price} />
           <div className="ml-14 w-full flex flex-row flex-wrap gap-[4.33%]  max-[1124px]:justify-around max-[785px]:justify-center max-[785px]:ml-0 ">
-            {categoryData.products &&
+            {categoryData?.products && categoryData?.products?.length && 
               categoryData?.products.map((product) => (
                 <div key={product.id} className=" flex flex-col mb-16 w-[240px]">
                   <div className=" h-400">

@@ -59,7 +59,7 @@ const Sidebar = ({category, categories}) => {
   return (
       <div className='flex flex-col w-full'>
       <div className="bg-color-prim1 mb-8 rounded-xs text-white">
-      {categories.map((category) => {
+      {categories && categories.map((category) => {
             return(
             <div key={category.id}>
               <button
@@ -84,7 +84,7 @@ const Sidebar = ({category, categories}) => {
               </button>
               {(openCategories == category.id) && (
                 <ul>
-                  {category.subcategories.map((subcategory) => (
+                  {category.subcategories && category.subcategories.map((subcategory) => (
                     <li key={subcategory.id}>
                       <button
                         className={`text-left pl-8 w-full py-3 rounded-[3px] ${

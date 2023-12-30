@@ -21,12 +21,12 @@ export default async function Home() {
         <div className="flex flex-col mb-6rem w-full">
           <h2 className="font-bold text-xl my-8 underline decoration-yellow-600 underline-offset-4  ">МАГАЗИН</h2>
           <div className="flex flex-row justify-between w-full gap-6 flex-wrap max-[1174px]:hidden">
-          {categories.map((category, index) => (
+          {categories && categories.map((category, index) => (
             <CategoryItem key={category.id + index} bodyObj={category}/>
           ))}
         </div>
         <div className="flex flex-row justify-around w-full gap-6 flex-wrap min-[1174px]:hidden max-[750px]">
-          {categories.map((category, index) => (
+          {categories && categories.map((category, index) => (
             <MobileCategoryItem key={category.id + index} bodyObj={category}/>
           ))}
         </div>
