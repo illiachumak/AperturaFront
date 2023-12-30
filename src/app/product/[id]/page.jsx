@@ -131,7 +131,7 @@ export default function Shop({ params }) {
                     <span className="">{item.name}</span>
                   </div>
                   <select
-                    className="select select-bordered text-black"
+                    className="rounded-lg py-2 px-2 text-black"
                     value={selectedOption}
                     onChange={(e) => handleOptionChange(item, e.target.value)}
                   >
@@ -213,7 +213,7 @@ export default function Shop({ params }) {
                 <span className="">{item.name}</span>
               </div>
               <select
-                className="select select-bordered text-black"
+                className="rounded-lg py-2 px-2 text-black"
                 value={selectedOption}
                 onChange={(e) => handleOptionChange(item, e.target.value)}
               >
