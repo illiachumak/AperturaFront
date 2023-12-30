@@ -109,7 +109,7 @@ const Cart = () => {
                         <div>
                           <p className='text-[24px] mb-3'>{item.title}</p>
                           <div className='w-full flex flex-wrap justify-between basis-[65%] overflow-scroll'>
-                            {item && item.modifications.map((option, i) => (
+                            {item?.modifications?.length && item?.modifications.map((option, i) => (
                               <div className='w-[45%]' key={i}>{option.name} - {option.value}</div>
                             ))}
                           </div>
