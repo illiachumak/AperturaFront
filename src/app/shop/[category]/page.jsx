@@ -29,42 +29,47 @@ function Shop({ params }) {
   const returnNotfound = () => {
     notFound()
   }
+
   const fetchCategories = async (categoryId) => {
-    
     const getCategories = async () => {
       const response = await axios.get(`${baseURL}categories/`);
       return response.data;
     };
 
     const fetchedCategories = await getCategories();
-      setCategories(fetchedCategories);
+    setCategories(fetchedCategories);
   }
+
   const fetchProducts = async (categoryId) => {
     const getCategoryProducts = async (categoryId, params) => {
       const url = `${baseURL}categories/${categoryId}/${params ? `${params}` : ''}`;
-      const response = await axios.get(url);
+      try {
+        const response = await axios.get(url);
+        return response.data;
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        throw error;
       }
-      return response.data;
     };
 
     const fetchData = async () => {
-      const params = window.location.search || '';
+      const params = router.query || '';
       if (categoryId) {
         const fetchedProducts = await getCategoryProducts(categoryId, params);
         setCategoryData(fetchedProducts);
       }
     };
     fetchData();
-  
- 
+  }
+
   useEffect(() => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-     fetchCategories()
-     fetchProducts(params.category)
-     if(!categories || categoryData){
+    fetchCategories()
+    fetchProducts(params.category)
+    if (!categories || !categoryData) {
       returnNotfound()
-     }
+    }
   }, [pathname, searchParams]);
 
   const selectedCategory = categories.find((category) => category.id == params.category);
