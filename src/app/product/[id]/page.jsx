@@ -9,6 +9,8 @@ import { baseURL } from '../../services/base';
 import { Skeleton } from '@mui/material';
 import axios from 'axios';
 import { blurDataURL } from '../../services/base';
+import Loading from '../../Components/Loading';
+import { setLoading } from '../../redux/slices/flagSlice';
 
 export default function Shop({ params }) {
   const router = useRouter()
@@ -90,6 +92,8 @@ export default function Shop({ params }) {
 
 
   return (
+    <>
+    <Loading/>
     <div className="my-12 responsive-container">
       <div className="min-640px-hidden">
         <p className="mb-8 text-[24px] uppercase font-bold">{data?.title}</p>
@@ -98,13 +102,13 @@ export default function Shop({ params }) {
         <div className='relative image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
           <Image
             src={data?.image_preview}
-            blurDataURL={blurDataURL}
-            placeholder="blur"
             alt=""
             width={300}
             height={500}
-            onLoadingComplete={() => setLoaded(true)}
-            className="image-container object-cover h-[500px] rounded-[5px] max-[640px]:basis-[50%]"
+            onLoadingComplete={() => {
+              setTimeout(()=>{dispatch(setLoading(false))}, 1000) 
+              setLoaded(true)}}
+            className={`image-container object-cover h-[500px] rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
           />
           {!loaded && (
             <Skeleton
@@ -272,6 +276,7 @@ export default function Shop({ params }) {
         </p>
       </div>
     </div>
+    </>
   );
 }
   

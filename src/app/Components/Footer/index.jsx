@@ -1,8 +1,12 @@
+"use client"
 import Image from "next/image"
 import Link from "next/link"
 import Logo from '../../../../public/aperturaLogoWhite.png'
-
+import { selectIsLoading } from "../../redux/slices/flagSlice"
+import { useSelector } from "react-redux"
 export default function Footer() {
+    const isLoading = useSelector(selectIsLoading)
+    if(isLoading) return
     return (
         <>
         <div className="h-10 bg-[#3A2911]"/>

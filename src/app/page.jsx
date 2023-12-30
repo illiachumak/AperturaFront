@@ -7,6 +7,7 @@ import CategoryItem from "./Components/CategoryItem"
 import MobileCategoryItem from "./Components/CategoryItem/mobileItem"
 import FeedbackSection from "./Components/FeedbackSection"
 import { getCategories } from "./services/api"
+import Loading from "./Components/Loading"
 
 
 export default async function Home() {

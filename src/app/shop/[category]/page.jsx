@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Sidebar from '../../Components/Sidebar';
@@ -14,6 +14,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../redux/slices/flagSlice';
 import { Skeleton } from "@mui/material";
+import Loading from '../../Components/Loading';
 
 function Shop({ params }) {
   const pathname = usePathname()
@@ -24,7 +25,8 @@ function Shop({ params }) {
   const [loaded, setLoaded] = useState(false)
   const router = useRouter();
 
-  const fetchShop = async (categoryId) => {
+  const fetchCategories = async (categoryId) => {
+    
     const getCategories = async () => {
       const response = await axios.get(`${baseURL}categories/`);
       if (!response.ok) {
@@ -35,6 +37,10 @@ function Shop({ params }) {
       return response.data;
     };
 
+    const fetchedCategories = await getCategories();
+      setCategories(fetchedCategories);
+  }
+  const fetchProducts = async (categoryId) => {
     const getCategoryProducts = async (categoryId, params) => {
       const url = `${baseURL}categories/${categoryId}/${params ? `${params}` : ''}`;
       const response = await axios.get(url);
@@ -53,21 +59,22 @@ function Shop({ params }) {
         const fetchedProducts = await getCategoryProducts(categoryId, params);
         setCategoryData(fetchedProducts);
       }
-      const fetchedCategories = await getCategories();
-      setCategories(fetchedCategories);
     };
     fetchData();
   };
-
+ 
   useEffect(() => {
-    dispatch(setLoading(true))
-    fetchShop(params.category).then( ()=> dispatch(setLoading(false)))
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+     fetchCategories()
+     fetchProducts(params.category)
   }, [pathname, searchParams]);
 
   const selectedCategory = categories.find((category) => category.id == params.category);
 
   return (
     <>
+    <Loading/>
       <div className="responsive-container body-container my-10">
         <div className="flex justify-between items-center w-full mb-8">
           <h2 className="block text-xl font-bold fz-16 max-[783px]:hidden">{selectedCategory?.name}</h2>
@@ -85,7 +92,9 @@ function Shop({ params }) {
                     <div className="relative mb-2">
                       <Link href={`/product/${product.id}`}>
                         <Image src={product.image_preview} width={200} height={345} alt="product" 
-                        blurDataURL={blurDataURL} onLoadingComplete={()=>setLoaded(true)}
+                        blurDataURL={blurDataURL} onLoadingComplete={()=>{
+                           dispatch(setLoading(false))
+                          setLoaded(true)}}
                          placeholder="blur" className={`w-full h-345 object-cover mb-2 rounded-xs ${!loaded && 'opacity-0'}`} />
                          {!loaded && (
                         <Skeleton

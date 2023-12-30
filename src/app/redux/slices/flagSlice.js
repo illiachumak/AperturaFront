@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState = {
-  isLoading: false
+  isLoading: true
 }
 
 export const flagSlice = createSlice({
@@ -10,16 +10,15 @@ export const flagSlice = createSlice({
   initialState,
   reducers: {
     setLoading: (state, action) => {
-      console.log('flag changed')
       state.isLoading = action.payload;
       if (action.payload) {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-        document.body.style.height = '100vh';
         document.body.style.overflow = 'hidden';
+        document.body.classList.add('bg-overlay');
       } else {
-        document.body.style.height = 'auto';
         document.body.style.overflow = 'auto';
+        document.body.classList.remove('bg-overlay');
       }
   },
 },

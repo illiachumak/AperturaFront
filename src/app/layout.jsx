@@ -14,7 +14,6 @@ export default function RootLayout({ children }) {
         <ReduxProvider store={store}>
           <Cart/>
           <Navbar/>
-          <Loading/>
           {children}
           <Footer/>
         </ReduxProvider>
