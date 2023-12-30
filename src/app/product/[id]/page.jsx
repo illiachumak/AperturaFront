@@ -160,7 +160,7 @@ export default function Shop({ params }) {
         <div className="options-block max-h-[500px] basis-[70%] min-[900px]:!basis-[45%] flex flex-col overflow-scroll max-[640px]:hidden">
           <p className="mb-4 text-[22px] uppercase font-bold">{data?.title}</p>
           <div className="flex justify-between flex-wrap overflow-scroll">
-          {data && data?.colors && (
+          {data && data?.colors.length && (
   <label className="form-control w-full flex-shrink mb-2 gap-y-2" key="colors@@@3">
     <div className="label flex justify-between w-full" onClick={(e) => e.stopPropagation()}>
       <span className="flex justify-between w-full">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
