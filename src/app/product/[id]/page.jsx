@@ -30,6 +30,7 @@ export default function Shop({ params }) {
         try {
           const response = await axios.get(url);
           setData(response.data);
+          console.log(response.data)
         } catch (error) {
           setErr(true)
         }
@@ -48,44 +49,56 @@ export default function Shop({ params }) {
   },[err])
 
   const handleColorChange = (colorObj) => {
-    setSelectedColor(colorObj)
-    console.log(selectedColor)
+    if(typeof colorObj === 'string'){
+    setSelectedColor(colorObj)}
+    else(
+      setSelectedColor(colorObj?.image[0]?.image)
+    )
   }
 
   const handleOptionChange = (item, selectedValue) => {
     console.log('Selected Value:', selectedValue);
-  
-  
+    
     const existingOptionIndex = optionsToSend.findIndex(option => option.name === item.name);
-  
+
     if (existingOptionIndex !== -1) {
       // Якщо айтем існує, замінюємо його значення
-      const newOptionsToSend = optionsToSend.map((option, index) => {
-        if (index === existingOptionIndex) {
-          return {
-            name: item.name,
-            value: selectedValue,
-            price: item.options.find(option => option.name === selectedValue)?.price || 0,
-          };
-        }
-        return option;
-      });
-  
+      const newOptionsToSend = [...optionsToSend];
+      const selectedOption = item.options.find(opt => opt.name === selectedValue);
+      
+      if (selectedOption && selectedOption.image) {
+        handleColorChange(selectedOption.image);
+      }
+
+      newOptionsToSend[existingOptionIndex] = {
+        ...item,
+        name: item.name,
+        value: selectedValue,
+        price: selectedOption?.price || 0,
+      };
+
       setOptionsToSend(newOptionsToSend);
     } else {
-      // Якщо айтем не існує, додаємо новий об'єкт до масиву
+      // Якщо айтем не існує, додаємо новий
+      const selectedOption = item.options.find(opt => opt.name === selectedValue);
+
+      if (selectedOption && selectedOption.image) {
+        handleColorChange(selectedOption.image);
+      }
+
       setOptionsToSend(prevOptions => [
         ...prevOptions,
         {
+          ...item,
           name: item.name,
           value: selectedValue,
-          price: item.options.find(option => option.name === selectedValue)?.price || 0,
+          price: selectedOption?.price || 0,
         },
       ]);
     }
-  
-    console.log(optionsToSend);
-  };
+};
+
+
 
   const handleOrderButtonClick = () => {
     const areAllOptionsSelected = data.modifications.every((item) => {
@@ -94,7 +107,7 @@ export default function Shop({ params }) {
     
 
     if (areAllOptionsSelected) {
-      if(selectedColor) {data.image_preview = selectedColor.image[0].image}
+      if(selectedColor) {data.image_preview = selectedColor}
       dispatch(addToCart({...data, modifications: optionsToSend, quantity: 1, 
         price: optionsToSend.reduce((total, option) => total + Number(option.price), 0) + Number(data?.price)}))
       dispatch(openCart())
@@ -115,7 +128,7 @@ export default function Shop({ params }) {
       <div className=" flex justify-between gap-[2%] max-[640px]:flex-col max-[640px]:items-center image-options-block">
         <div className='relative'>
         {!selectedColor && (
-          <div className='relative image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
+          <div className='relative image-container rounded-[5px] max-[640px]:basis-[50%]'>
           <Image
             src={data?.image_preview}
             alt=""
@@ -124,7 +137,7 @@ export default function Shop({ params }) {
             onLoadingComplete={() => {
               setTimeout(()=>{dispatch(setLoading(false))}, 1000) 
               setLoaded(true)}}
-            className={`image-container object-cover h-[500px] rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
+            className={`image-container object-cover max-h-[500px] h-auto rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
           />
           {!loaded && (
             <Skeleton
@@ -138,16 +151,16 @@ export default function Shop({ params }) {
           </div>
         )}
           {selectedColor && (
-            <div className='image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
+            <div className='image-container  rounded-[5px] max-[640px]:basis-[50%]'>
             <Image
-              src={selectedColor.image[0].image}
+              src={selectedColor}
               alt=""
               width={300}
               height={500}
               onLoadingComplete={() => {
                 setTimeout(()=>{dispatch(setLoading(false))}, 1000) 
                 setLoaded(true)}}
-              className={`image-container object-cover h-[500px] rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
+              className={`image-container object-cover max-h-[500px] h-auto rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
             />
             {!loaded && (
               <Skeleton
@@ -164,13 +177,13 @@ export default function Shop({ params }) {
         <div className="options-block max-h-[500px] basis-[70%] min-[900px]:!basis-[45%] flex flex-col overflow-scroll max-[640px]:hidden">
           <p className="mb-4 text-[22px] uppercase font-bold">{data?.title}</p>
           <div className="flex justify-between flex-wrap overflow-scroll">
-          {data && data?.colors.length && (
+          {data && data?.colors.length ? (
   <label className="form-control w-full flex-shrink mb-2 gap-y-2" key="colors@@@3">
     <div className="label flex justify-between w-full" onClick={(e) => e.stopPropagation()}>
       <span className="flex justify-between w-full">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
     </div>
        <div className="flex flex-wrap gap-4" >
-        {data?.colors && data?.colors?.length && data.colors.map((option, i) => (
+        {data?.colors && data?.colors?.length ? data.colors.map((option, i) => (
           <button
             className="flex items-center"
             type="button"
@@ -182,10 +195,10 @@ export default function Shop({ params }) {
             <Image src={option.preview_image} alt="" width={20} height={20} />
             <span className="ml-2">{option.name}</span>
           </button>
-        ))}
+        )) : <></>}
       </div>
   </label>
-)}
+) : <></>}
 
             
             {data && data?.modifications && data.modifications.map((item, i) => {
@@ -198,14 +211,15 @@ export default function Shop({ params }) {
                   <select
                     className="rounded-lg py-2 px-2 text-black"
                     value={selectedOption}
-                    onChange={(e) => handleOptionChange(item, e.target.value)}
+                    onChange={(e) => {
+                      handleOptionChange(item, e.target.value)}}
                   >
                     <option disabled value="">
                       Вибрати
                     </option>
                     {item?.options.map((option, i) => (
                       <option value={option.name} key={option.name + i}>
-                        {option.name}
+                        {option.name}  +{option?.price}грн
                       </option>
                     ))}
                   </select>
@@ -244,7 +258,8 @@ export default function Shop({ params }) {
           </div>
         </div>
 
-        <div className="basis-[300px] flex flex-col !justify-between flex-shrink-0 h-[500px] bg-color-prim1 rounded-[5px] max-[900px]:hidden p-8 price-summary-block">
+        <div className="basis-[300px] flex flex-col !justify-between flex-shrink-0 max-h-[500px] 
+        bg-color-prim1 rounded-[5px] max-[900px]:hidden p-8 price-summary-block">
           <div>
             <p className="text-[18px] font-bold mb-4">Ціна дверного полотна<br/>{Number(data?.price)} ₴</p>
             <hr className="border-t border-gray-300 my-4 w-3/4" />
@@ -270,6 +285,29 @@ export default function Shop({ params }) {
       </div>
 
       <div className="flex justify-between flex-wrap overflow-scroll min-640px-hidden">
+      {data && data?.colors.length ? (
+  <label className="form-control w-full flex-shrink mb-2 gap-y-2" key="colors@@@3">
+    <div className="label flex justify-between w-full" onClick={(e) => e.stopPropagation()}>
+      <span className="flex justify-between w-full">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
+    </div>
+       <div className="flex flex-wrap gap-4" >
+        {data?.colors && data?.colors?.length ? data.colors.map((option, i) => (
+          <button
+            className="flex items-center"
+            type="button"
+            key={option.name + i}
+            onClick={(e) => {
+              e.stopPropagation()
+              handleColorChange(option)}}
+          >
+            <Image src={option.preview_image} alt="" width={20} height={20} />
+            <span className="ml-2">{option.name}</span>
+          </button>
+        )) : <></>}
+      </div>
+  </label>
+) : <></>}
+
         {data && data?.modifications && data.modifications.map((item, i) => {
           const selectedOption = optionsToSend.find(option => option.name === item.name)?.value || '';
           return (

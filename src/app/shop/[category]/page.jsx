@@ -61,7 +61,7 @@ function Shop({ params }) {
       returnNotFound();
     }
   }, [categoryData, categories]);
-  
+
   const selectedCategory = categories.find((category) => category.id == params.category);
 
   return (
@@ -87,7 +87,7 @@ function Shop({ params }) {
                         blurDataURL={blurDataURL} onLoadingComplete={()=>{
                            dispatch(setLoading(false))
                           setLoaded(true)}}
-                         placeholder="blur" className={`w-full h-345 object-cover mb-2 rounded-xs ${!loaded && 'opacity-0'}`} />
+                         placeholder="blur" className={`w-full max-h-[345px] object-cover mb-2 rounded-xs ${!loaded && 'opacity-0'}`} />
                          {!loaded && (
                         <Skeleton
                             sx={{ bgcolor: 'grey.100' }}
