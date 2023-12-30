@@ -103,8 +103,8 @@ const Cart = () => {
               {productArr && productArr.length ? (
                 productArr.map((item, i) => {
                   return (
-                    <div key={item?.cartId + i} className='w-[85%] flex justify-between'>
-                      <Image src={item?.image_preview} alt="door" width={180} height={200} className='rounded-lg max-w-[180px] w-[30%] h-auto'/>
+                    <div key={item?.cartId + i} className='w-[85%] flex gap-4 justify-between'>
+                      <Image src={item?.image_preview} alt="door" width={180} height={200} className='rounded-lg w-[180px] h-auto'/>
                       <div className='w-[65%] flex flex-col justify-between'>
                         <div>
                           <p className='text-[24px] mb-3'>{item.title}</p>
@@ -127,7 +127,7 @@ const Cart = () => {
                             </div>
                           </div>
                           <button
-                            className="main_button-white w-[40%] max-[500px]:w-[45%] text-white py-4 px-6 max-[1000px]:text-[10px] min-h-[36px] rounded"
+                            className="main_button-white w-[40%]  text-white py-4 px-6 max-[1000px]:text-[10px] min-h-[36px] rounded"
                             onClick={() => removeItem(item.cartId)}
                           >
                             Видалити
