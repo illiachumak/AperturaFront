@@ -110,6 +110,7 @@ export default function Shop({ params }) {
       </div>
       <div className=" flex justify-between gap-[2%] max-[640px]:flex-col max-[640px]:items-center image-options-block">
         <div className='relative'>
+        {!selectedColor && (
           <div className='relative image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
           <Image
             src={data?.image_preview}
@@ -131,9 +132,9 @@ export default function Shop({ params }) {
             />
           )}
           </div>
-
+        )}
           {selectedColor && (
-            <div className='absolute top-0 left-0 z-[8] image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
+            <div className='image-container h-[500px] rounded-[5px] max-[640px]:basis-[50%]'>
             <Image
               src={selectedColor.image[0].image}
               alt=""
@@ -160,26 +161,25 @@ export default function Shop({ params }) {
           <p className="mb-4 text-[22px] uppercase font-bold">{data?.title}</p>
           <div className="flex justify-between flex-wrap overflow-scroll">
           {data && data?.colors && (
-  <label className="form-control w-full flex-shrink" key="colors@@@3">
-    <div className="label flex justify-between w-full">
+  <label className="form-control w-full flex-shrink mb-2 gap-y-2" key="colors@@@3">
+    <div className="label flex justify-between w-full" onClick={(e) => e.stopPropagation()}>
       <span className="flex justify-between w-full">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
     </div>
-       <div className="flex flex-wrap gap-4">
+       <div className="flex flex-wrap gap-4" >
         {data.colors.map((option, i) => (
           <button
             className="flex items-center"
             type="button"
             key={option.name + i}
-            onClick={() => handleColorChange(option)}
+            onClick={(e) => {
+              e.stopPropagation()
+              handleColorChange(option)}}
           >
             <Image src={option.preview_image} alt="" width={20} height={20} />
             <span className="ml-2">{option.name}</span>
           </button>
         ))}
       </div>
-    <div className="label">
-      <span className=""></span>
-    </div>
   </label>
 )}
 
