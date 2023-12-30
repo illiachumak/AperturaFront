@@ -26,52 +26,42 @@ function Shop({ params }) {
   const [loaded, setLoaded] = useState(false)
   const router = useRouter();
 
-  const returnNotfound = () => {
-    notFound()
-  }
+  const returnNotFound = () => {
+    notFound();
+  };
 
   const fetchCategories = async (categoryId) => {
-    const getCategories = async () => {
+    try {
       const response = await axios.get(`${baseURL}categories/`);
-      return response.data;
-    };
-
-    const fetchedCategories = await getCategories();
-    setCategories(fetchedCategories);
-  }
+      setCategories(response.data);
+    } catch (error) {
+      setCategories('error');
+    }
+  };
 
   const fetchProducts = async (categoryId) => {
-    const getCategoryProducts = async (categoryId, params) => {
-      const url = `${baseURL}categories/${categoryId}/${params ? `${params}` : ''}`;
-      try {
-        const response = await axios.get(url);
-        return response.data;
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        throw error;
-      }
-    };
-
-    const fetchData = async () => {
-      const params = router.query || '';
-      if (categoryId) {
-        const fetchedProducts = await getCategoryProducts(categoryId, params);
-        setCategoryData(fetchedProducts);
-      }
-    };
-    fetchData();
-  }
+    const url = `${baseURL}categories/${categoryId}/${router.query || ''}`;
+    try {
+      const response = await axios.get(url);
+      setCategoryData(response.data);
+    } catch (error) {
+      setCategoryData('error');
+    }
+  };
 
   useEffect(() => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    fetchCategories()
-    fetchProducts(params.category)
-    if (!categories || !categoryData) {
-      returnNotfound()
-    }
+    fetchCategories();
+    fetchProducts(params.category);
   }, [pathname, searchParams]);
 
+  useEffect(() => {
+    if (categoryData === 'error' || categories === 'error') {
+      returnNotFound();
+    }
+  }, [categoryData, categories]);
+  
   const selectedCategory = categories.find((category) => category.id == params.category);
 
   return (

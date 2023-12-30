@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import productImg from '../../assets/product/door.png';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { addToCart, openCart } from '../../redux/slices/cartSlice';
 import { baseURL } from '../../services/base';
@@ -20,28 +20,32 @@ export default function Shop({ params }) {
   const [selectedColor, setSelectedColor] = useState('');
   const [data, setData] = useState(null);
   const [loaded, setLoaded] = useState(false)
+  const [err, setErr] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async (id) => {
-
-    const getProductById = async (id) => {
-      const url = `${baseURL}product/${id}/`;
-      const response = await axios.get(url);
-      console.log('url',url)
-      console.log('data', response.data)
-      if (!response.ok) {
-        if (response.status === 401) {
+      const getProductById = async (id) => {
+        const url = `${baseURL}product/${id}/`;
+        try {
+          const response = await axios.get(url);
+          setData(response.data);
+        } catch (error) {
+          setErr(true)
         }
-      }
-      return response.data;
+      };
+      getProductById(id);
     };
-    const data = await getProductById(id)
-    setData(data)
-  }
 
-  fetchData(params.id)
-  },[])
+    fetchData(params.id);
+
+  }, []);
+
+  useEffect(()=>{
+    if(err){
+      notFound()
+    }
+  },[err])
 
   const handleColorChange = (colorObj) => {
     setSelectedColor(colorObj)
