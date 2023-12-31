@@ -298,7 +298,7 @@ export default function Shop({ params }) {
             key={option.name + i}
             onClick={(e) => {
               e.stopPropagation()
-              handleColorChange(option)}}
+              handleColorChange(option.image[0].image, option.name)}}
           >
             <Image src={option.preview_image} alt="" width={20} height={20} />
             <span className="ml-2">{option.name}</span>
