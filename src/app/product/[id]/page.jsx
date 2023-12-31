@@ -69,10 +69,10 @@ export default function Shop({ params }) {
       }
 
       newOptionsToSend[existingOptionIndex] = {
-        ...item,
         name: item.name,
         value: selectedValue,
         price: selectedOption?.price || 0,
+        id: selectedOption?.id
       };
 
       setOptionsToSend(newOptionsToSend);
@@ -87,10 +87,10 @@ export default function Shop({ params }) {
       setOptionsToSend(prevOptions => [
         ...prevOptions,
         {
-          ...item,
           name: item.name,
           value: selectedValue,
           price: selectedOption?.price || 0,
+          id: selectedOption?.id
         },
       ]);
     }
@@ -107,7 +107,8 @@ export default function Shop({ params }) {
     if (areAllOptionsSelected) {
       if(selectedColor) {data.image_preview = selectedColor.image}
       dispatch(addToCart({...data, modifications: optionsToSend, quantity: 1, 
-        price: optionsToSend.reduce((total, option) => total + Number(option.price), 0) + Number(data?.price)}))
+        price: optionsToSend.reduce((total, option) => total + Number(option.price), 0) + Number(data?.price),
+        color: selectedColor.name}))
       dispatch(openCart())
     } else {
       // Display an alert if not all options are selected

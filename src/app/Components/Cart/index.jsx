@@ -76,6 +76,7 @@ const Cart = () => {
     dispatch(changeQuantity({ cartId: productId, quantity: -1 }));
   };
   useEffect(() => {
+    console.log(productArr)
     dispatch(initializeCartFromStorage());
   }, [isOpen]);
 
