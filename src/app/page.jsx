@@ -34,7 +34,7 @@ export default async function Home() {
         </div>
       </main>
 
-      <div className="about-bg max-[1000px]:hidden">
+      <div className="about-bg max-[1000px]:hidden py-8">
         <div className="responsive-container mb-6rem flex flex-row justify-between gap-16 !mt-24">
           <Image className="w-[500px] object-cover h-[550px] max-[1100px]:w-[400px]" src={about} alt="" />
           <div className="w-full flex flex-col justify-between text-white">

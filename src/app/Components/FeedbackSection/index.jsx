@@ -1,7 +1,8 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '../Modal';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { orderFeedback } from '../../redux/slices/orderSlice';
 const FeedbackSection = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -9,6 +10,8 @@ const FeedbackSection = () => {
   const [nameIsValid, setNameIsValid] = useState(true)
   const phoneRegex = /^(\+38)?\d{10}$/;
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch(); 
+  const {isOk} = useSelector(state=> state.order)
   const validatePhoneNumber = () => {
     setPhoneIsValid(phoneRegex.test(phone));
   };
@@ -25,9 +28,18 @@ const FeedbackSection = () => {
     }
   
     if (name.trim() && phoneIsValid) {
-      setIsOpen(true)
+      dispatch(orderFeedback({
+        name: name,
+        number: phone
+      }))
     }
   };
+
+  useEffect(()=>{
+    if(isOk){
+      setIsOpen(true)
+    }
+  },[isOk])
 
   return (<>
   {isOpen && <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
@@ -37,7 +49,7 @@ const FeedbackSection = () => {
     </div>
     </Modal>}
     <div id="section-to-scroll" className="w-full bg-[#130E04]">
-      <div className="responsive-container !mt-20 flex flex-row max-[780px]:flex-col gap-12 justify-between">
+      <div className="responsive-container pt-16 flex flex-row max-[780px]:flex-col gap-12 justify-between">
         <div className="max-w-1/2 flex flex-col justify-center max-[780px]:order-2 max-[780px]:max-w-[100%]">
           <div>
             <label className="block mb-2 text-3xl font-medium ">Імʼя</label>
