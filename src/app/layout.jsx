@@ -10,11 +10,12 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" className="scroll-smooth">
-      <body className='flex justify-center flex-col'>
+      <body className='flex justify-between h-screen flex-col'>
         <ReduxProvider store={store}>
-          <Cart/> 
-          <Navbar/> 
-          <div>{children}</div>
+          
+          <Navbar/>
+          <Cart/>  
+          <div className='flex-grow'>{children}</div>
           <Footer/>
         </ReduxProvider>
       </body>

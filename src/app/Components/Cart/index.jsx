@@ -109,9 +109,9 @@ const Cart = () => {
                         <div>
                           <p className='text-[24px] mb-3'>{item.title}</p>
                           <div className='w-full flex flex-wrap justify-between basis-[65%] overflow-scroll'>
-                            {item?.modifications?.length && item?.modifications.map((option, i) => (
+                            {item?.modifications?.length ? item?.modifications.map((option, i) => (
                               <div className='w-[45%]' key={i}>{option.name} - {option.value}</div>
-                            ))}
+                            )) : (<></>)}
                           </div>
                         </div>
                         <div>
@@ -143,10 +143,10 @@ const Cart = () => {
               )}
             </div>
           </div>
-          {productArr && <div className='w-full flex gap-4 items-center mb-4'>
+          {productArr?.length ? <div className='w-full flex gap-4 items-center mb-4'>
             <p className='text-[20px]'>Загальна ціна:</p>
             <p className='text-[20px]'>{calculateTotalPrice()} грн</p>
-          </div>}
+          </div> : <></>}
 
           <div className='flex justify-between'>
             <button
@@ -158,7 +158,12 @@ const Cart = () => {
             <button
               className="main_button-white w-[40%] max-[500px]:w-[45%] text-white py-4 px-6 
               max-[1000px]:text-[10px] min-h-[36px] rounded"
-              onClick={handleOpenSendModal}
+              onClick={() => {
+                if(productArr?.length){
+
+                  handleOpenSendModal() 
+                }
+              }}
             >
               Оформити замовлення
             </button>

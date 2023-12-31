@@ -8,7 +8,7 @@ export default function Footer() {
     const isLoading = useSelector(selectIsLoading)
     if(isLoading) return
     return (
-        <>
+        <div>
         <div className="h-10 bg-[#3A2911]"/>
             <footer className="bg-[#130E04] py-10">
                 <div className="px-8 align-bottom shop-wrapper h-[100px]">
@@ -25,6 +25,6 @@ export default function Footer() {
                 </div>
                 </div>
             </footer>
-        </>
+        </div>
     )
 }

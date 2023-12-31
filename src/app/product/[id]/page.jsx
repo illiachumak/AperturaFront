@@ -48,12 +48,10 @@ export default function Shop({ params }) {
     }
   },[err])
 
-  const handleColorChange = (colorObj) => {
-    if(typeof colorObj === 'string'){
-    setSelectedColor(colorObj)}
-    else(
-      setSelectedColor(colorObj?.image[0]?.image)
-    )
+  const handleColorChange = (image, name) => {
+    
+      setSelectedColor({image, name})
+  
   }
 
   const handleOptionChange = (item, selectedValue) => {
@@ -67,7 +65,7 @@ export default function Shop({ params }) {
       const selectedOption = item.options.find(opt => opt.name === selectedValue);
       
       if (selectedOption && selectedOption.image) {
-        handleColorChange(selectedOption.image);
+        handleColorChange(selectedOption.image, selectedOption.name );
       }
 
       newOptionsToSend[existingOptionIndex] = {
@@ -83,7 +81,7 @@ export default function Shop({ params }) {
       const selectedOption = item.options.find(opt => opt.name === selectedValue);
 
       if (selectedOption && selectedOption.image) {
-        handleColorChange(selectedOption.image);
+        handleColorChange(selectedOption.image,selectedOption.name);
       }
 
       setOptionsToSend(prevOptions => [
@@ -107,7 +105,7 @@ export default function Shop({ params }) {
     
 
     if (areAllOptionsSelected) {
-      if(selectedColor) {data.image_preview = selectedColor}
+      if(selectedColor) {data.image_preview = selectedColor.image}
       dispatch(addToCart({...data, modifications: optionsToSend, quantity: 1, 
         price: optionsToSend.reduce((total, option) => total + Number(option.price), 0) + Number(data?.price)}))
       dispatch(openCart())
@@ -153,7 +151,7 @@ export default function Shop({ params }) {
           {selectedColor && (
             <div className='image-container  rounded-[5px] max-[640px]:basis-[50%]'>
             <Image
-              src={selectedColor}
+              src={selectedColor.image}
               alt=""
               width={300}
               height={500}
@@ -180,7 +178,7 @@ export default function Shop({ params }) {
           {data && data?.colors.length ? (
   <label className="form-control w-full flex-shrink mb-2 gap-y-2" key="colors@@@3">
     <div className="label flex justify-between w-full" onClick={(e) => e.stopPropagation()}>
-      <span className="flex justify-between w-full">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
+      <span className="flex justify-between w-full gap-2">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
     </div>
        <div className="flex flex-wrap gap-4" >
         {data?.colors && data?.colors?.length ? data.colors.map((option, i) => (
@@ -190,7 +188,8 @@ export default function Shop({ params }) {
             key={option.name + i}
             onClick={(e) => {
               e.stopPropagation()
-              handleColorChange(option)}}
+              console.log(option)
+              handleColorChange(option.image[0].image, option.name)}}
           >
             <Image src={option.preview_image} alt="" width={20} height={20} />
             <span className="ml-2">{option.name}</span>
@@ -242,7 +241,7 @@ export default function Shop({ params }) {
                 ))}
               </div>
             </div>
-            <div className='flex h-full flex-col justify-between'>
+            <div className='flex h-full flex-col justify-between mt-4'>
               <div className="flex gap-4 font-bold">
                 <p className='text-[14px]'>Загальна ціна</p>
                 <p className='text-[14px]'>
@@ -270,7 +269,7 @@ export default function Shop({ params }) {
             ))}
           </div>
           <div>
-            <div className="flex gap-4 font-bold">
+            <div className="flex gap-4 font-bold mt-4">
               <p className='text-[16px]'>Загальна ціна</p>
               <p className='text-[16px]'>
                 {(
@@ -288,7 +287,7 @@ export default function Shop({ params }) {
       {data && data?.colors.length ? (
   <label className="form-control w-full flex-shrink mb-2 gap-y-2" key="colors@@@3">
     <div className="label flex justify-between w-full" onClick={(e) => e.stopPropagation()}>
-      <span className="flex justify-between w-full">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
+      <span className="flex justify-between w-full gap-2"><span>Кольори </span> {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
     </div>
        <div className="flex flex-wrap gap-4" >
         {data?.colors && data?.colors?.length ? data.colors.map((option, i) => (
@@ -357,7 +356,7 @@ export default function Shop({ params }) {
             })}
           </div>
         </div>
-        <div className='flex h-full flex-col justify-between'>
+        <div className='flex h-full flex-col justify-between mt-4'>
           <div className="flex gap-4 font-bold">
             <p className='min-[450px]:text-[14px]'>Загальна ціна</p>
             <p className='min-[450px]:text-[14px]'>
