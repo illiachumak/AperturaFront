@@ -11,14 +11,15 @@ export const flagSlice = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.isLoading = action.payload;
+      
       if (action.payload) {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
         document.body.style.overflow = 'hidden';
-        document.body.classList.add('bg-overlay');
+        document.body.style.height = '100vh';
       } else {
         document.body.style.overflow = 'auto';
-        document.body.classList.remove('bg-overlay');
+        document.body.style.height = 'auto';
       }
   },
 },

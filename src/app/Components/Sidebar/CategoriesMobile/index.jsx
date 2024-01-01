@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect} from 'react';
 import Image from 'next/image';
 import v2 from '../../../assets/v2.svg';
 import SidebarMobile from '../mobileSidebar';
@@ -7,6 +7,18 @@ export default function CategoriesMobile({ category, categories }) {
   
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if(open){
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100vh';
+    }
+   
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+      document.body.style.height = 'auto';
+    }
+  }, [open])
   
   return (
     <>

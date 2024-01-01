@@ -40,7 +40,8 @@ function Shop({ params }) {
   };
 
   const fetchProducts = async (categoryId) => {
-    const url = `${baseURL}categories/${categoryId}/${router.query || ''}`;
+    
+    const url = `${baseURL}categories/${categoryId}/?${searchParams || ''}`;
     try {
       const response = await axios.get(url);
       setCategoryData(response.data);
@@ -76,7 +77,7 @@ function Shop({ params }) {
 
         <div className="flex w-full">
           <Sidebar category={params.category} categories={categories} minPrice={categoryData.min_price} maxPrice={categoryData.max_price} />
-          <div className="ml-14 w-full flex flex-row flex-wrap gap-[4.33%]  max-[1124px]:justify-around max-[785px]:justify-center max-[785px]:ml-0 ">
+          <div className="ml-14 w-full flex flex-row flex-wrap gap-x-[79px] gap-y-[40px] max-[1280px]:justify-around max-[785px]:justify-center max-[785px]:ml-0 ">
             {categoryData?.products && categoryData?.products?.length && 
               categoryData?.products.map((product) => (
                 <div key={product.id} className=" flex flex-col mb-16 w-[240px]">
