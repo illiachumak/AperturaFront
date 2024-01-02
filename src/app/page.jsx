@@ -15,7 +15,7 @@ export default async function Home() {
   const categories  = await getCategories()
   return (
     <>
-      <main className="!pt-12 max-[750px]:!pt-4 responsive-container body-container flex flex-col justify-between items-center">
+      <main className="!pt-12 max-[750px]:!pt-4 responsive-container flex flex-col justify-between items-center">
         <Carousel />
 
         <div className="flex flex-col mb-6rem w-full">

@@ -47,7 +47,7 @@ html{
 
 body{
   color: white;
-  min-width: 400px;
+  min-width: 303px;
 }
 .wrapper{
   padding: 0 20px;
@@ -284,4 +284,8 @@ color: #FFF;
 .bg-loading{
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(10px);
+}
+
+.underlined{
+  text-decoration: underline 2px #df9f45;
 }

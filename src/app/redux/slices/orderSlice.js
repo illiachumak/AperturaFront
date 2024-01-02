@@ -21,7 +21,11 @@ export const orderFeedback = createAsyncThunk(
 export const orderSlice = createSlice({
   name: 'order',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsOkFalse: (state)=>{
+      state.isOk = false;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(orderFeedback.pending, (state) => {
@@ -42,5 +46,8 @@ export const orderSlice = createSlice({
       });
   },
 });
+
+
+export const {setIsOkFalse} = orderSlice.actions
 
 export default orderSlice.reducer;

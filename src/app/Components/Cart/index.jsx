@@ -105,20 +105,23 @@ const Cart = () => {
                 productArr.map((item, i) => {
                   return (
                     <div key={item?.cartId + i} className='w-[85%] flex gap-4 justify-between'>
-                      <Image src={item?.image_preview} alt="door" width={180} height={200} className='rounded-lg w-[180px] h-auto'/>
+                      <Image src={item?.image_preview} alt="door" width={180} height={200} className='object-contain rounded-lg w-[180px] h-auto'/>
                       <div className='w-[65%] flex flex-col justify-between'>
                         <div>
                           <p className='text-[24px] mb-3'>{item.title}</p>
-                          <div className='w-full flex flex-wrap justify-between basis-[65%] overflow-scroll'>
+                          <div className='w-full flex flex-wrap justify-between max-h-[150px] gap-[10px] max-[615px]:gap-0 overflow-y-scroll'>
                             {item?.modifications?.length ? item?.modifications.map((option, i) => (
-                              <div className='w-[45%]' key={i}>{option.name} - {option.value}</div>
+                              <>
+                              <div className='w-[125px] max-[615px]:mb-2' key={i}><span className='font-bold'>{option.name}</span> - {option.value}</div>
+                              <hr className='my-4' />
+                              </>
                             )) : (<></>)}
                           </div>
                         </div>
                         <div>
-                        <p className='text-[16px]'>Ціна: <b>{item.price*item.quantity} грн</b></p>
-                        <div className='w-full flex justify-between items-center'>
-                          <div className='flex w-1/2 justify-between items-center'>
+                        <p className='text-[16px] mt-4'>Ціна: <b>{item.price*item.quantity} грн</b></p>
+                        <div className='w-full flex flex-wrap gap-2 justify-between items-center'>
+                          <div className='flex min-w-[120px] gap-[8px] justify-between items-center'>
                             <p>
                               Кількість: <b>{item.quantity}</b>
                             </p>
@@ -128,7 +131,7 @@ const Cart = () => {
                             </div>
                           </div>
                           <button
-                            className="main_button-white w-[40%]  text-white py-4 px-6 max-[1000px]:text-[10px] min-h-[36px] rounded"
+                            className="main_button-white w-[40%] min-w-[80px]  text-white py-4 px-6 max-[1000px]:text-[10px] min-h-[36px] rounded"
                             onClick={() => removeItem(item.cartId)}
                           >
                             Видалити

@@ -104,7 +104,7 @@ export default function Shop({ params }) {
     
 
     if (areAllOptionsSelected) {
-      if(selectedColor) {data.image_preview = selectedColor.image}
+      if(selectedColor.image) {data.image_preview = selectedColor.image}
       dispatch(addToCart({...data, modifications: optionsToSend, quantity: 1, 
         price: optionsToSend.reduce((total, option) => total + Number(option.price), 0) + Number(data?.price),
         color: selectedColor.name}))
@@ -134,7 +134,7 @@ export default function Shop({ params }) {
             width={300}
             height={500}
             onLoadingComplete={() => {
-              setTimeout(()=>{dispatch(setLoading(false))}, 1000) 
+              setTimeout(()=>{dispatch(setLoading(false))}, 200) 
               setLoaded(true)}}
             className={`image-container object-cover max-h-[500px] h-auto rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
           />
@@ -153,7 +153,7 @@ export default function Shop({ params }) {
             <div className='image-container  rounded-[5px] max-[640px]:basis-[50%]'>
             <Image
               priority={true}
-              src={selectedColor.image}
+              src={`${selectedColor?.image ? selectedColor?.image : data?.image_preview}`}
               alt=""
               width={300}
               height={500}
@@ -180,7 +180,7 @@ export default function Shop({ params }) {
           {data && data?.colors.length ? (
   <label className="form-control w-full flex-shrink mb-2 gap-y-2" key="colors@@@3">
     <div className="label flex justify-between w-full" onClick={(e) => e.stopPropagation()}>
-      <span className="flex justify-between w-full gap-2">Кольори  {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
+      <span className="flex justify-between w-full gap-2">Кольори </span>
     </div>
        <div className="flex flex-wrap gap-4" >
         {data?.colors && data?.colors?.length ? data.colors.map((option, i) => (
@@ -194,7 +194,7 @@ export default function Shop({ params }) {
               handleColorChange(option.image[0].image, option.name)}}
           >
             <Image priority={true} src={option.preview_image} alt="" width={20} height={20} />
-            <span className="ml-2">{option.name}</span>
+            <span className={`ml-2 ${selectedColor.name === option.name && 'underlined'}`}>{option.name}</span>
           </button>
         )) : <></>}
       </div>
@@ -289,7 +289,7 @@ export default function Shop({ params }) {
       {data && data?.colors.length ? (
   <label className="form-control w-full flex-shrink mb-2 gap-y-2" key="colors@@@3">
     <div className="label flex justify-between w-full" onClick={(e) => e.stopPropagation()}>
-      <span className="flex justify-between w-full gap-2"><span>Кольори </span> {selectedColor && <span className=''>Вибрано - {selectedColor.name}</span>}</span>
+      <span className="flex justify-between w-full gap-2"><span>Кольори</span></span>
     </div>
        <div className="flex flex-wrap gap-4" >
         {data?.colors && data?.colors?.length ? data.colors.map((option, i) => (
@@ -302,7 +302,7 @@ export default function Shop({ params }) {
               handleColorChange(option.image[0].image, option.name)}}
           >
             <Image priority={true} src={option.preview_image} alt="" width={20} height={20} />
-            <span className="ml-2">{option.name}</span>
+            <span className={`ml-2 ${selectedColor.name === option.name && 'underlined'}`}>{option.name}</span>
           </button>
         )) : <></>}
       </div>
@@ -344,12 +344,6 @@ export default function Shop({ params }) {
           <hr className="border-t border-gray-300 my-4 w-3/4" />
           <div className="flex flex-col h-[40%] overflow-x-scroll max-w-full">
             {optionsToSend && optionsToSend.map((option, i) => {
-              if (i === 1) return (
-                <div key={option.name + i} className="flex-shrink-0 flex justify-between px-2">
-                  <p>...</p>
-                </div>
-              );
-              if (i >= 1) return
               return (
                 <div key={option.name + i} className="flex-shrink-0 flex px-2">
                   <p>+{option.price}₴ - {option.value} </p>

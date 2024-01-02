@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderFeedback } from '../../redux/slices/orderSlice';
+import { orderFeedback, setIsOkFalse} from '../../redux/slices/orderSlice';
 const FeedbackSection = () => {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneIsValid, setPhoneIsValid] = useState(true);
   const [nameIsValid, setNameIsValid] = useState(true)
   const phoneRegex = /^(\+38)?\d{10}$/;
@@ -13,12 +13,11 @@ const FeedbackSection = () => {
   const dispatch = useDispatch(); 
   const {isOk} = useSelector(state=> state.order)
   const validatePhoneNumber = () => {
-    setPhoneIsValid(phoneRegex.test(phone));
+    setPhoneIsValid(phoneRegex.test(phoneNumber));
   };
 
   const handleOrderButtonClick = (e) => {
     e.preventDefault();
-    
     setNameIsValid(true);
     setPhoneIsValid(true);
     validatePhoneNumber();
@@ -30,7 +29,7 @@ const FeedbackSection = () => {
     if (name.trim() && phoneIsValid) {
       dispatch(orderFeedback({
         name: name,
-        number: phone
+        number: phoneNumber
       }))
     }
   };
@@ -40,6 +39,12 @@ const FeedbackSection = () => {
       setIsOpen(true)
     }
   },[isOk])
+  useEffect(()=>{
+    return()=>{
+      setIsOpen(false);
+      dispatch(setIsOkFalse())
+    }
+  },[])
 
   return (<>
   {isOpen && <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
@@ -76,8 +81,8 @@ const FeedbackSection = () => {
               placeholder="(097)-743-23-56"
               pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
               required
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
             />
             {!phoneIsValid && <label className="block mt-2 text-[#f53131] text-[12px] font-medium ">Введіть правильний номер!</label>}
           </div>
