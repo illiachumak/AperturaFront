@@ -70,7 +70,7 @@ function Shop({ params }) {
     <Loading/>
       <div className="responsive-container body-container my-10">
         <div className="flex justify-between items-center w-full mb-8">
-          <h2 className="block text-xl font-bold fz-16 max-[783px]:hidden">{selectedCategory?.name}</h2>
+          <h2 className="block font-bold text-[20px] max-[783px]:hidden">{selectedCategory?.name}</h2>
           <CategoriesMobile category={params.category} categories={categories}/>
           <SortOption category={params.category} />
         </div>
@@ -84,7 +84,7 @@ function Shop({ params }) {
                   <div className=" h-400">
                     <div className="relative mb-2">
                       <Link href={`/product/${product.id}`}>
-                        <Image src={product.image_preview} width={200} height={345} alt="product" 
+                        <Image priority={true} src={product.image_preview} width={200} height={345} alt="product" 
                         blurDataURL={blurDataURL} onLoadingComplete={()=>{
                            dispatch(setLoading(false))
                           setLoaded(true)}}

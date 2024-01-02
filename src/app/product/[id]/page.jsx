@@ -129,6 +129,7 @@ export default function Shop({ params }) {
         {!selectedColor && (
           <div className='relative image-container rounded-[5px] max-[640px]:basis-[50%]'>
           <Image
+            priority={true}
             src={data?.image_preview}
             alt=""
             width={300}
@@ -152,6 +153,7 @@ export default function Shop({ params }) {
           {selectedColor && (
             <div className='image-container  rounded-[5px] max-[640px]:basis-[50%]'>
             <Image
+              priority={true}
               src={selectedColor.image}
               alt=""
               width={300}
@@ -192,7 +194,7 @@ export default function Shop({ params }) {
               console.log(option)
               handleColorChange(option.image[0].image, option.name)}}
           >
-            <Image src={option.preview_image} alt="" width={20} height={20} />
+            <Image priority={true} src={option.preview_image} alt="" width={20} height={20} />
             <span className="ml-2">{option.name}</span>
           </button>
         )) : <></>}
@@ -300,7 +302,7 @@ export default function Shop({ params }) {
               e.stopPropagation()
               handleColorChange(option.image[0].image, option.name)}}
           >
-            <Image src={option.preview_image} alt="" width={20} height={20} />
+            <Image priority={true} src={option.preview_image} alt="" width={20} height={20} />
             <span className="ml-2">{option.name}</span>
           </button>
         )) : <></>}
