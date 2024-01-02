@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { image_urls } from "../../services/base";
 export default function MobileCategoryItem({ bodyObj }) {
   const { preview_image, name, id } = bodyObj;
 
@@ -10,7 +9,7 @@ export default function MobileCategoryItem({ bodyObj }) {
   return (
     <div className="group flex justify-between text-center relative overflow-hidden cursor-pointer">
       <Image
-        src={image_urls}
+        src={preview_image}
         alt={name}
         width={400}
         height={400}

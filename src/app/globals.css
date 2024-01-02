@@ -20,6 +20,8 @@ html{
   background-size: cover;
   background-repeat: repeat;
   background-position: center;
+  background-color: #221b05;
+  scroll-behavior: auto;
 }
 .shop-wrapper{
   max-width: 1200px;

@@ -8,6 +8,7 @@ export default function Loading() {
   
   useEffect(()=>{
     document.body.scrollTop = 0;
+    document.body.scrollBehavior = 'auto'
     document.documentElement.scrollTop = 0;
     dispatch(setLoading(true))
         return ()=>{
