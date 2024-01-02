@@ -21,7 +21,6 @@ export default function Shop({ params }) {
   const [data, setData] = useState(null);
   const [loaded, setLoaded] = useState(false)
   const [err, setErr] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(false)
 
   useEffect(() => {
     const fetchData = async (id) => {

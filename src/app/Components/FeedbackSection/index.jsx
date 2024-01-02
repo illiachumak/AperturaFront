@@ -48,8 +48,8 @@ const FeedbackSection = () => {
       <p>Ми зателефонуємо вам протягом 1 робочого дня</p>
     </div>
     </Modal>}
-    <div id="section-to-scroll" className="w-full bg-[#130E04]">
-      <div className="responsive-container pt-16 flex flex-row max-[780px]:flex-col gap-12 justify-between">
+    <div id="section-to-scroll" className="w-full pt-16 bg-[#130E04]">
+      <div className="responsive-container flex flex-row max-[780px]:flex-col gap-12 justify-between">
         <div className="max-w-1/2 flex flex-col justify-center max-[780px]:order-2 max-[780px]:max-w-[100%]">
           <div>
             <label className="block mb-2 text-3xl font-medium ">Імʼя</label>
