@@ -16,9 +16,8 @@ export default function Footer() {
                     <div className="w-230 text-sm content-center flex flex-col gap-2 text-right"> 
                         <p className="mb-2">Контакти:</p>
                         <p>+380123456789</p>
-                        <p>apertura@gmail.com</p>
+                        <a href = "mailto: apertura@gmail.com">apertura@gmail.com</a>
                         <p>м.Львів вул.Чорновола 44</p>
-                        <p>Зворотній зв`язок</p>
                     </div>
                 </div>
                 </div>

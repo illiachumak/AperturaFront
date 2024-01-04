@@ -40,8 +40,8 @@ export default function DoubleSlider({minPrice, maxPrice}) {
         <>
             <div className="range_container pt-4 pb-3 pl-5 pr-5 bg-color-prim1 mb-auto rounded-xs text-white">
                 <div className="form_control flex justify-between items-center">
-                    <p>{min}-{max}</p>
-                    <div onClick={debouncedPushToRouter} className='pr-1 text-xl cursor-pointer'>Ок</div>
+                    <p>{min} грн - {max} грн</p>
+                    <button onClick={debouncedPushToRouter} className=' text-xl cursor-pointer px-3 text-black py-1 bg-gray-200 opacity-90 rounded-lg'>Ок</button>
                 </div>
                 <div className="sliders_control">
                     <input

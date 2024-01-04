@@ -238,7 +238,7 @@ export default function Shop({ params }) {
               <div className="flex flex-col h-[40%] overflow-x-scroll max-w-full">
                 {optionsToSend && optionsToSend.map((option, i) => (
                   <div key={option.name + i} className="flex-shrink-0 flex justify-between mb-2 px-2">
-                    <p>+{option.price}₴ - {option.value} </p>
+                    <p>+{option.price}₴ - <b>{option.value}</b></p>
                   </div>
                 ))}
               </div>
@@ -266,7 +266,7 @@ export default function Shop({ params }) {
             <hr className="border-t border-gray-300 my-4 w-3/4" />
             {optionsToSend && optionsToSend.map((option, i) => (
               <div key={option.name + i} className="flex justify-between mb-2">
-                <p>+{option.price}₴ - {option.value} </p>
+                <p>+{option.price}₴ - <b>{option.value}</b> </p>
               </div>
             ))}
           </div>
@@ -346,7 +346,7 @@ export default function Shop({ params }) {
             {optionsToSend && optionsToSend.map((option, i) => {
               return (
                 <div key={option.name + i} className="flex-shrink-0 flex px-2">
-                  <p>+{option.price}₴ - {option.value} </p>
+                  <p>+{option.price}₴ - <b>{option.value}</b> </p>
                 </div>
               )
             })}

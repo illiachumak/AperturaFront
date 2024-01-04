@@ -8,12 +8,14 @@ import { closeCart, selectIsCartOpen, initializeCartFromStorage,
    removeFromCart, changeQuantity, selectIsSendModalOpen, openSendModal, closeSendModal } from '../../redux/slices/cartSlice';
 import productImg from '../../assets/product/door.png';
 import Image from 'next/image';
+import { orderProduct, selectOrderResponse } from '../../redux/slices/orderSlice';
 
 
 const Cart = () => {
   const isOpen = useSelector(selectIsCartOpen);
   const productArr = useSelector((state) => state.cart.items);
   const isSendModalOpen = useSelector(selectIsSendModalOpen)
+  const orderResponse = useSelector(selectOrderResponse)
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
@@ -48,7 +50,19 @@ const Cart = () => {
     }
   
     if (name.trim() && phoneIsValid) {
+      let err;
+      try{
+        dispatch(orderProduct({name,phone,email}))
+      }catch(e){
+        err = true
+        throw new Error(e)
+      }
+      if(err){
+
+      }else{
+      localStorage.removeItem('cart')    
       setOpenRegisteredModal(true)
+    }
     }
   };
 
@@ -106,13 +120,13 @@ const Cart = () => {
                   return (
                     <div key={item?.cartId + i} className='w-[85%] flex gap-4 justify-between'>
                       <Image src={item?.image_preview} alt="door" width={180} height={200} className='object-contain rounded-lg w-[180px] h-auto'/>
-                      <div className='w-[65%] flex flex-col justify-between'>
+                      <div className='w-[80%] flex flex-col justify-between'>
                         <div>
                           <p className='text-[24px] mb-3'>{item.title}</p>
-                          <div className='w-full flex flex-wrap justify-between max-h-[150px] gap-[10px] max-[615px]:gap-0 overflow-y-scroll'>
+                          <div className='w-full flex flex-wrap  max-h-[150px] gap-[10px] max-[615px]:gap-0 overflow-y-scroll'>
                             {item?.modifications?.length ? item?.modifications.map((option, i) => (
                               <>
-                              <div className='w-[125px] max-[615px]:mb-2' key={i}><span className='font-bold'>{option.name}</span> - {option.value}</div>
+                              <div className='w-[125px] max-[615px]:mb-2' key={i}><span className='font-bold break-normal'>{option.name}</span> - {option.value}</div>
                               <hr className='my-4' />
                               </>
                             )) : (<></>)}
@@ -180,7 +194,7 @@ const Cart = () => {
       <Modal isOpen={isSendModalOpen} onClose={handleCloseSendModal}>
         <div className='w-full h-full px-[2%] pt-[5%] pb-[4%] flex flex-col justify-between'>
         <p className='text-[32px] mb-4 '>Корзина</p>
-          {!openRegisteredModal ? (
+          {!orderResponse && !orderResponse?.status? (
             <>
           <div className="my-8 mb-8">
     <label className="block mb-2 text-3xl font-medium">Електронна пошта</label>
@@ -239,7 +253,7 @@ const Cart = () => {
             Подзвонити мені
           </button>
           </>) : (<>
-          <p className='my-8'>{name}, Ваше замовлення в обробці, ми вам перетелефонуємо на протязі 2 робочих днів!</p>
+          <p className='my-8'>{name}, Ваше замовлення <b>№{orderResponse?.data?.id}</b> в обробці, ми вам перетелефонуємо на протязі 2 робочих днів!</p>
           </>)}
         
         </div>
