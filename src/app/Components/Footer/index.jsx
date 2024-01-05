@@ -2,9 +2,15 @@
 import Image from "next/image"
 import Link from "next/link"
 import Logo from '../../../../public/aperturaLogoWhite.png'
-
+import { usePathname } from "next/navigation";
 export default function Footer() {
+    const pathname = usePathname()
+    const isAdminPage = pathname.includes('admin-page');
 
+    // Do not render if it's an admin page
+    if (isAdminPage) {
+      return null;
+    }
     return (
         <div>
         <div className="h-10 bg-[#3A2911]"/>

@@ -6,6 +6,7 @@ import './style.css'
 import BurgerMenu from '../BurgerMenu'
 import { openCart } from "../../redux/slices/cartSlice"
 import { useDispatch } from "react-redux"
+import { usePathname } from "next/navigation"
 /*
     * Responsible for rendering navbar
     * Responsible for routing
@@ -13,6 +14,14 @@ import { useDispatch } from "react-redux"
 
 export default function Navbar() {
   const dispatch = useDispatch()
+
+  const pathname = usePathname()
+  const isAdminPage = pathname.includes('admin-page');
+
+  // Do not render if it's an admin page
+  if (isAdminPage) {
+    return null;
+  }
       return (
       <div className="bg-[#130E04] sticky top-0 z-10"
     >
