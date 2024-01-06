@@ -33,13 +33,13 @@ const Order = ({ order, index, onRefresh}) => {
     }
     return (
             <React.Fragment key={order.id+index}>
-            <td className="border border-gray-300 p-2">{order.id}</td>
-            <td className="border border-gray-300 p-2 text-black">{new Date(order.date_created).toLocaleString()}</td>
-            <td className="border border-gray-300 p-2">{order.name}</td>
-            <td className="border border-gray-300 p-2">{order.number}</td>
-            <td className="border border-gray-300 p-2">{order.email}</td>
-            <td className="border border-gray-300 p-2">{order.total_price}</td>
-            <td className="border border-gray-300 p-2">
+            <td className="border border-black p-2">{order.id}</td>
+            <td className="border border-black p-2 text-black">{new Date(order.date_created).toLocaleString()}</td>
+            <td className="border border-black p-2">{order.name}</td>
+            <td className="border border-black p-2">{order.number}</td>
+            <td className="border border-black p-2">{order.email}</td>
+            <td className="border border-black p-2">{order.total_price}</td>
+            <td className="border border-black p-2">
                 <label className="flex flex-col">
                     {isPaid ? "Оплачено" : "Не Оплачено"}
                     <input
@@ -49,7 +49,7 @@ const Order = ({ order, index, onRefresh}) => {
                     />
                 </label>
                 </td>
-            <td className="border border-gray-300 p-2">
+            <td className="border border-black p-2">
                 <select
                     value={orderStatus}
                     onChange={(e) => handleChangeStatus(e.target.value)}
@@ -59,10 +59,10 @@ const Order = ({ order, index, onRefresh}) => {
                     <option value="ВИКОНАНО">Виконано</option>
                 </select>
             </td>
-            <td className="border border-gray-300 p-2">
+            <td className="border border-black p-2">
                 {order.products.map((product, i) => (
                     <div key={product.id + i}>
-                        <table className="min-w-full text-black bg-white border border-gray-300">
+                        <table className="min-w-full text-black bg-white border border-black">
                         <thead>
                                     <tr>
                                         <th className="border border-gray-300 p-2">Product Name</th>
@@ -94,7 +94,7 @@ const Order = ({ order, index, onRefresh}) => {
                     </div>
                 ))}
             </td>
-            <td className="border border-gray-300 p-2">
+            <td className="border border-black p-2">
                 <button onClick={handleSendChanges}>Підтвердити зміни</button>
             </td>
             </React.Fragment>

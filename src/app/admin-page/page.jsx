@@ -108,18 +108,18 @@ const Login = () => {
                    return(
                     <div className="w-full flex flex-col" key={i}> 
                 <span className="my-6 text-[32px]">{status}</span>
-                  <table className="w-full text-black bg-white border border-gray-300">
+                  <table className="w-full text-black bg-white border border-black">
                     <thead>
                       <tr>
-                        <th className="border border-gray-300 p-2">Id</th>
-                        <th className="border border-gray-300 p-2">Time</th>
-                        <th className="border border-gray-300 p-2">Name</th>
-                        <th className="border border-gray-300 p-2">Number</th>
-                        <th className="border border-gray-300 p-2">Email</th>
-                        <th className="border border-gray-300 p-2">Price</th>
-                        <th className="border border-gray-300 p-2">Payment</th>
-                        <th className="border border-gray-300 p-2">Status</th>
-                        <th className="border border-gray-300 p-2">Order Info</th>
+                        <th className="border border-black p-2">Id</th>
+                        <th className="border border-black p-2">Time</th>
+                        <th className="border border-black p-2">Name</th>
+                        <th className="border border-black p-2">Number</th>
+                        <th className="border border-black p-2">Email</th>
+                        <th className="border border-black p-2">Price</th>
+                        <th className="border border-black p-2">Payment</th>
+                        <th className="border border-black p-2">Status</th>
+                        <th className="border border-black p-2">Order Info</th>
                       </tr>
                     </thead>
                     <tbody>
