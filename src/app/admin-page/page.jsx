@@ -106,7 +106,7 @@ const Login = () => {
                     }
                     getTitle(i)
                    return(
-                    <div className="w-full flex flex-col"> 
+                    <div className="w-full flex flex-col" key={i}> 
                 <span className="my-6 text-[32px]">{status}</span>
                   <table className="w-full text-black bg-white border border-gray-300">
                     <thead>
@@ -131,7 +131,7 @@ const Login = () => {
                             orderStatus = status 
                         }
                         return(
-                        <tr key={index}>
+                        <tr key={order.od+index}>
                         <OrderItem key={i} order={order} index={i} onRefresh={() => setRefresh(state => !state)} />
                         </tr>
                         
