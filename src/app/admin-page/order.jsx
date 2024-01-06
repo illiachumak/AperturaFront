@@ -3,7 +3,7 @@ import { useState } from "react";
 import { baseURL } from "../services/base";
 import { useRouter} from "next/navigation";
 
-export default ({ order, index }) => {
+export default ({ order, index, onRefresh}) => {
     const [orderStatus, setOrderStatus] = useState(order.status)
     const [isPaid, setIsPaid] = useState(order.payment);
     const router = useRouter()
@@ -27,11 +27,11 @@ export default ({ order, index }) => {
             }
           ).then(res => {
             alert("Замовлення успішно змінено")
-            location.reload()
+            onRefresh()
           })
     }
     return (
-            <>
+            <React.Fragment key={order.id+index}>
             <td className="border border-gray-300 p-2">{order.id}</td>
             <td className="border border-gray-300 p-2 text-black">{new Date(order.date_created).toLocaleString()}</td>
             <td className="border border-gray-300 p-2">{order.name}</td>
@@ -96,6 +96,6 @@ export default ({ order, index }) => {
             <td className="border border-gray-300 p-2">
                 <button onClick={handleSendChanges}>Підтвердити зміни</button>
             </td>
-            </>
+            </React.Fragment>
     );
 };

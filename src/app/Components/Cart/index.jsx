@@ -9,7 +9,8 @@ import { closeCart, selectIsCartOpen, initializeCartFromStorage,
 import productImg from '../../assets/product/door.png';
 import Image from 'next/image';
 import { orderProduct, selectOrderResponse } from '../../redux/slices/orderSlice';
-
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Cart = () => {
   const isOpen = useSelector(selectIsCartOpen);
@@ -17,7 +18,7 @@ const Cart = () => {
   const isSendModalOpen = useSelector(selectIsSendModalOpen)
   const orderResponse = useSelector(selectOrderResponse)
   const dispatch = useDispatch();
-
+  const router = useRouter()
   const [email, setEmail] = useState('');
   const [emailIsValid, setEmailIsValid] = useState(true);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -90,7 +91,6 @@ const Cart = () => {
     dispatch(changeQuantity({ cartId: productId, quantity: -1 }));
   };
   useEffect(() => {
-    console.log(productArr)
     dispatch(initializeCartFromStorage());
   }, [isOpen]);
 
@@ -107,6 +107,10 @@ const Cart = () => {
     }
   },[])
 
+  const handleClickImage = (id) => {
+    handleCloseModal()
+    router.push(`/product/${id}`)
+  }
   return (
     <div>
       <Modal isOpen={isOpen} onClose={handleCloseModal}>
@@ -119,10 +123,12 @@ const Cart = () => {
                 productArr.map((item, i) => {
                   return (
                     <div key={item?.cartId + i} className='w-[85%] flex gap-4 justify-between'>
-                      <Image src={item?.image_preview} alt="door" width={180} height={200} className='object-contain rounded-lg w-[180px] h-auto'/>
+                      <Image src={item?.image_preview} alt="door" width={180} height={200} 
+                      onClick={() => handleClickImage(item.id)}
+                      className='cursor-pointer object-contain rounded-lg w-[180px] h-auto'/>
                       <div className='w-[80%] flex flex-col justify-between'>
                         <div>
-                          <p className='text-[24px] mb-3'>{item.title}</p>
+                          <h1 className='text-[24px] mb-3'><Link href={`/product/${item.id}`}>{item.title}</Link></h1>
                           <div className='w-full flex flex-wrap  max-h-[150px] gap-[10px] max-[615px]:gap-0 overflow-y-scroll'>
                             {item?.modifications?.length ? item?.modifications.map((option, i) => (
                               <>

@@ -11,6 +11,7 @@ const Login = () => {
     const [passwordError, setPasswordError] = useState("")
     const [orders, setOrders] = useState(null)
     const [token, setToken] = useState('');
+    const [refresh, setRefresh] = useState(true);
 
     useEffect(() => {
         const storedToken = sessionStorage.getItem('admin-token');
@@ -39,7 +40,7 @@ const Login = () => {
         if (token) {
           getAdminData();
         }
-      }, [token]);
+      }, [token, refresh]);
 
     const onButtonClick = async () => {
         try{
@@ -131,7 +132,7 @@ const Login = () => {
                         }
                         return(
                         <tr key={index}>
-                        <OrderItem key={i} order={order} index={i} />
+                        <OrderItem key={i} order={order} index={i} onRefresh={() => setRefresh(state => !state)} />
                         </tr>
                         
                     )})}
