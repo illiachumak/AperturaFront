@@ -4,7 +4,7 @@ import { baseURL } from "../services/base";
 import { useRouter} from "next/navigation";
 import React from "react";
 
-export default ({ order, index, onRefresh}) => {
+const Order = ({ order, index, onRefresh}) => {
     const [orderStatus, setOrderStatus] = useState(order.status)
     const [isPaid, setIsPaid] = useState(order.payment);
     const router = useRouter()
@@ -100,3 +100,4 @@ export default ({ order, index, onRefresh}) => {
             </React.Fragment>
     );
 };
+export default Order;
