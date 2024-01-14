@@ -28,8 +28,10 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/app/not-found.jsx", "src/app/admin-page/order.jsx"  ],
+    "**/*.tsx",
+    "**/*.jsx",
+    "**/*.js",
+"src/app/not-found.jsx", "src/app/admin-page/order.jsx", "src/app/pag-test/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

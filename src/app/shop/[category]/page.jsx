@@ -16,6 +16,7 @@ import { setLoading } from '../../redux/slices/flagSlice';
 import { Skeleton } from "@mui/material";
 import Loading from '../../Components/Loading';
 import { notFound } from 'next/navigation';
+import Pagination from '../../Components/Pagination';
 
 function Shop({ params }) {
   const pathname = usePathname()
@@ -42,9 +43,11 @@ function Shop({ params }) {
   const fetchProducts = async (categoryId) => {
     
     const url = `${baseURL}categories/${categoryId}/?${searchParams || ''}`;
+    console.log(url)
     try {
       const response = await axios.get(url);
       setCategoryData(response.data);
+      console.log(response.data)
     } catch (error) {
       setCategoryData('error');
     }
@@ -76,10 +79,10 @@ function Shop({ params }) {
         </div>
 
         <div className="flex w-full">
-          <Sidebar category={params.category} categories={categories} minPrice={categoryData.min_price} maxPrice={categoryData.max_price} />
+          <Sidebar category={params.category} categories={categories} minPrice={categoryData?.results?.min_price} maxPrice={categoryData?.results?.max_price} />
           <div className="ml-14 w-full flex flex-row flex-wrap gap-x-[79px] gap-y-[40px] max-[1280px]:justify-around max-[785px]:justify-center max-[785px]:ml-0 ">
-            {categoryData?.products && categoryData?.products?.length && 
-              categoryData?.products.map((product) => (
+            {categoryData.results?.products && categoryData.results?.products?.length && 
+              categoryData?.results?.products.map((product) => (
                 <div key={product.id} className=" flex flex-col mb-16 w-[240px]">
                   <div className=" h-400">
                     <div className="relative mb-2">
@@ -114,6 +117,7 @@ function Shop({ params }) {
                       </Link>
                 </div>
               ))}
+              {(categoryData?.count / 9) > 1 && <Pagination totalPages={Math.round((categoryData?.count / 9))}/>}
           </div>
         </div>
       </div>
