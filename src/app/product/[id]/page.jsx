@@ -48,8 +48,8 @@ export default function Shop({ params }) {
   },[err])
 
   const handleColorChange = (image, name) => {
-    
-      setSelectedColor({image, name})
+    image ? setSelectedColor({image, name}) :
+    setSelectedColor({image: selectedColor.image, name})
   
   }
 
@@ -125,7 +125,7 @@ export default function Shop({ params }) {
       </div>
       <div className=" flex justify-between gap-[2%] max-[640px]:flex-col max-[640px]:items-center image-options-block">
         <div className='relative'>
-        {!selectedColor && (
+        {!selectedColor.image && (
           <div className='relative image-container rounded-[5px] max-[640px]:basis-[50%]'>
           <Image
             priority={true}
@@ -149,7 +149,7 @@ export default function Shop({ params }) {
           )}
           </div>
         )}
-          {selectedColor && (
+          {selectedColor.image && (
             <div className='image-container  rounded-[5px] max-[640px]:basis-[50%]'>
             <Image
               priority={true}
@@ -190,8 +190,7 @@ export default function Shop({ params }) {
             key={option.name + i}
             onClick={(e) => {
               e.stopPropagation()
-              console.log(option)
-              handleColorChange(option.image[0].image, option.name)}}
+              handleColorChange(option?.image && option?.image[0]?.image, option.name)}}
           >
             <Image priority={true} src={option.preview_image} alt="" width={20} height={20} />
             <span className={`ml-2 ${selectedColor.name === option.name && 'underlined'}`}>{option.name}</span>
@@ -233,7 +232,7 @@ export default function Shop({ params }) {
           </div>
           <div className="mt-5 w-full flex-shrink-0 h-[120px] bg-color-prim1 rounded-[5px] min-[900px]:hidden p-4 py-5 flex items-center justify-between gap-[10px]">
             <div className='h-full overflow-hidden'>
-              <p className="text-[14px] font-bold mb-4">Ціна дверного полотна {data?.price} ₴</p>
+              <p className="text-[14px] font-bold mb-4">Ціна {data?.price} ₴</p>
               <hr className="border-t border-gray-300 my-4 w-3/4" />
               <div className="flex flex-col h-[40%] overflow-x-scroll max-w-full">
                 {optionsToSend && optionsToSend.map((option, i) => (
@@ -245,7 +244,7 @@ export default function Shop({ params }) {
             </div>
             <div className='flex h-full flex-col justify-between mt-4'>
               <div className="flex gap-4 font-bold">
-                <p className='text-[14px]'>Загальна ціна</p>
+                <p className='text-[14px]'>Загальна вартість</p>
                 <p className='text-[14px]'>
                   {(
                     optionsToSend.reduce((total, option) => total + Number(option.price), 0) +
@@ -262,7 +261,7 @@ export default function Shop({ params }) {
         <div className="basis-[300px] flex flex-col !justify-between flex-shrink-0 max-h-[500px] 
         bg-color-prim1 rounded-[5px] max-[900px]:hidden p-8 price-summary-block">
           <div>
-            <p className="text-[18px] font-bold mb-4">Ціна дверного полотна<br/>{Number(data?.price)} ₴</p>
+            <p className="text-[18px] font-bold mb-4">Ціна<br/>{Number(data?.price)} ₴</p>
             <hr className="border-t border-gray-300 my-4 w-3/4" />
             {optionsToSend && optionsToSend.map((option, i) => (
               <div key={option.name + i} className="flex justify-between mb-2">
@@ -272,7 +271,7 @@ export default function Shop({ params }) {
           </div>
           <div>
             <div className="flex gap-4 font-bold mt-4">
-              <p className='text-[16px]'>Загальна ціна</p>
+              <p className='text-[16px]'>Загальна вартість</p>
               <p className='text-[16px]'>
                 {(
                   optionsToSend.reduce((total, option) => total + Number(option.price), 0) +
@@ -340,7 +339,7 @@ export default function Shop({ params }) {
 
       <div className="mt-5 w-full flex-shrink-0 h-[160px] bg-color-prim1 rounded-[5px] min-[640px]:hidden p-4 py-5 flex items-center justify-between gap-[10px]">
         <div className='h-full overflow-hidden'>
-          <p className="min-[450px]:text-[14px] font-bold mb-4">Ціна дверного полотна <br/>{data?.price} ₴</p>
+          <p className="min-[450px]:text-[14px] font-bold mb-4">Ціна <br/>{data?.price} ₴</p>
           <hr className="border-t border-gray-300 my-4 w-3/4" />
           <div className="flex flex-col h-[40%] overflow-x-scroll max-w-full">
             {optionsToSend && optionsToSend.map((option, i) => {
@@ -354,7 +353,7 @@ export default function Shop({ params }) {
         </div>
         <div className='flex h-full flex-col justify-between mt-4'>
           <div className="flex gap-4 font-bold">
-            <p className='min-[450px]:text-[14px]'>Загальна ціна</p>
+            <p className='min-[450px]:text-[14px]'>Загальна вартість</p>
             <p className='min-[450px]:text-[14px]'>
               {(
                 optionsToSend.reduce((total, option) => total + Number(option.price), 0) +

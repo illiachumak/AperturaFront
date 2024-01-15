@@ -1,4 +1,3 @@
-"use client"
 import { useEffect, useState } from 'react';
 import DoubleSlider from './DoubleSlider';
 import './style.css';
@@ -6,19 +5,37 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import arrDown from '../../assets/shop/ardown.svg';
 
-function findCategoryForSubcategory(categories, subcategoryId) {
-  for (const category of categories) {
-    const foundSubcategory = category.subcategories.find(
-      (sub) => sub.id == subcategoryId
-    );
+export const findCategoryForSubcategory = (categories, subcategoryId) =>  {
+  function findRecursive(category, targetId) {
+    const foundSubcategory = category.subcategories.find((sub) => sub.id == targetId);
 
     if (foundSubcategory) {
       return category;
     }
+
+    for (const subcategory of category.subcategories) {
+      const result = findRecursive(subcategory, targetId);
+      if (result) {
+        return result;
+      }
+    }
+
+    return null;
   }
 
-  return null; // Змінено на null, оскільки не знайдено категорію
+  for (const category of categories) {
+    const result = findRecursive(category, subcategoryId);
+
+    if (result) {
+      return result;
+    }
+  }
+
+  return null;
 }
+
+
+
 
 function isMainCategory(categories, categoryId) {
   for (const category of categories) {
@@ -30,22 +47,26 @@ function isMainCategory(categories, categoryId) {
   return false;
 }
 
-const Sidebar = ({ categories, category, minPrice, maxPrice}) => {
+const Sidebar = ({ categories, category, minPrice, maxPrice }) => {
   const [activeCategory, setActiveCategory] = useState('');
   const [activeSubcategory, setActiveSubcategory] = useState('');
-  const [openCategories, setOpenCategories] = useState('');
+  const [openCategories, setOpenCategories] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     if (categories && category) {
       if (isMainCategory(categories, category)) {
         setActiveCategory(category);
-        setOpenCategories(category);
+        setOpenCategories([category]);
       } else {
         setActiveSubcategory(category);
-        const mainCategory = findCategoryForSubcategory(categories, category);
-        setActiveCategory(mainCategory ? mainCategory.id : '');
-        setOpenCategories(mainCategory ? mainCategory.id : ''); 
+        const mainCategoryInfo = findCategoryForSubcategory(categories, category);
+        const parentCat = mainCategoryInfo && findCategoryForSubcategory(categories, mainCategoryInfo.id)
+        const subcategoryIds = parentCat ? [parentCat?.id, mainCategoryInfo?.id, category] : 
+        mainCategoryInfo && [ mainCategoryInfo?.id, category];
+        console.log(subcategoryIds)
+        setActiveCategory(subcategoryIds && subcategoryIds[0] || []);
+        setOpenCategories(subcategoryIds && [...subcategoryIds] || []);
       }
     }
   }, [categories, category]);
@@ -53,6 +74,48 @@ const Sidebar = ({ categories, category, minPrice, maxPrice}) => {
   const handleCategoryClick = (categoryId) => {
     router.push(`/shop/${categoryId}`);
   };
+
+  const handleSubcategoryClick = (subcategoryId) => {
+    router.push(`/shop/${subcategoryId}`);
+  };
+
+const renderSubcategories = (subcategories, depth = 1) => (
+    <ul>
+      {subcategories.map((subcategory) => (
+        <li key={subcategory.id}>
+          <button
+            className={` relative text-left pl-8 w-full py-3 ${subcategory?.subcategories.length < 0 && 'rounded-b-xs'} ${
+              openCategories.includes(subcategory.id) || category == subcategory.id ? 'bg-active-subcategory-prim1' : ''
+            }`}
+            onClick={() => handleSubcategoryClick(subcategory.id)}
+          >
+            {subcategory.name}
+          {subcategory.subcategories.length > 0 && (
+                <Image
+                  src={arrDown}
+                  alt=''
+                  width={28}
+                  className={`absolute top-[7%] right-[14px] cursor-pointer transition-transform 
+                    ${(openCategories.includes(subcategory.id)) && 'rotate-180'}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenCategories((prevOpenCategories) => {
+                        if (prevOpenCategories.includes(subcategory.id)) {
+                          return prevOpenCategories.filter((id) => id !== subcategory.id);
+                        } else {
+                          return [...prevOpenCategories, subcategory.id];
+                        }
+                      });
+                    }}
+                />
+          )}
+          </button>
+          {openCategories.includes(subcategory.id) && renderSubcategories(subcategory.subcategories, depth += 1 )}
+        </li>
+      ))}
+    </ul>
+  );
+
 
   return (
     <div className='flex flex-col max-w-full max-[840px]:hidden'>
@@ -73,38 +136,25 @@ const Sidebar = ({ categories, category, minPrice, maxPrice}) => {
                     alt=''
                     width={28}
                     className={`absolute top-[15%] right-4 cursor-pointer transition-transform 
-                    ${(openCategories == categoryItem.id) && 'rotate-180'}`}
+                    ${(openCategories.includes(categoryItem.id)) && 'rotate-180'}`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setOpenCategories(
-                        openCategories === categoryItem.id ? '' : categoryItem.id
-                      )
+                      setOpenCategories((prevOpenCategories) => {
+                        if (prevOpenCategories.includes(categoryItem.id)) {
+                          return prevOpenCategories.filter((id) => id !== categoryItem.id);
+                        } else {
+                          return [...prevOpenCategories, categoryItem.id];
+                        }
+                      });
                     }}
                   />
-                ): ('') }
+                ) : ('')}
               </button>
-              {openCategories == categoryItem.id && (
-                <ul>
-                  {categoryItem?.subcategories && categoryItem.subcategories.map((subcategory) => (
-                    <li key={subcategory.id}>
-                      <button
-                        className={`text-left pl-8 w-full py-3 rounded-b-xs ${
-                          activeSubcategory == subcategory.id
-                            ? 'bg-active-subcategory-prim1'
-                            : ''
-                        }`}
-                        onClick={() => handleCategoryClick(subcategory.id)}
-                      >
-                        {subcategory.name}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {openCategories.includes(categoryItem.id) && renderSubcategories(categoryItem.subcategories)}
             </div>
           ))}
       </div>
-      <DoubleSlider minPrice={minPrice} maxPrice={maxPrice}/>
+      <DoubleSlider minPrice={minPrice} maxPrice={maxPrice} />
     </div>
   );
 };

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Sidebar from '../../Components/Sidebar';
+import Sidebar, { findCategoryForSubcategory } from '../../Components/Sidebar';
 import dummycardphoto from '../../assets/shop/cardDummy.jpg';
 import ShopCardButton from '../../Components/Buttons/shopCardButton';
 import SortOption from '../../Components/Sort';
@@ -66,14 +66,15 @@ function Shop({ params }) {
     }
   }, [categoryData, categories]);
 
-  const selectedCategory = categories.find((category) => category.id == params.category);
+  const mainCategory = findCategoryForSubcategory(categories, params.category)?.subcategories.find((category) => category.id == params.category)
+   || categories.find((category) => category.id == params.category)
 
   return (
     <>
-    <Loading/>
+    {/* <Loading/> */}
       <div className="responsive-container body-container my-10">
         <div className="flex justify-between items-center w-full mb-8">
-          <h2 className="block font-bold text-[20px] max-[783px]:hidden">{selectedCategory?.name}</h2>
+          <h2 className="block font-bold text-[20px] max-[783px]:hidden">{mainCategory?.name}</h2>
           <CategoriesMobile category={params.category} categories={categories}/>
           <SortOption category={params.category} />
         </div>
