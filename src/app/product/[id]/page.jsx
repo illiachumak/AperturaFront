@@ -89,7 +89,7 @@ export default function Shop({ params }) {
           name: item.name,
           value: selectedValue,
           price: selectedOption?.price || 0,
-          id: selectedOption?.id
+          id: selectedOption?.id,
         },
       ]);
     }
@@ -107,11 +107,11 @@ export default function Shop({ params }) {
       if(selectedColor.image) {data.image_preview = selectedColor.image}
       dispatch(addToCart({...data, modifications: optionsToSend, quantity: 1, 
         price: optionsToSend.reduce((total, option) => total + Number(option.price), 0) + Number(data?.price),
-        color: selectedColor.name}))
+        color: selectedColor.name || null}))
       dispatch(openCart())
     } else {
       // Display an alert if not all options are selected
-      alert('Please select all options before placing the order.');
+      alert('Будь ласка заповніть всі необхідні поля!');
     }
   };
 
