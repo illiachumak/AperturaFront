@@ -22,7 +22,7 @@ export default function Footer() {
                     <div className="w-230 text-sm content-center flex flex-col gap-2 text-right"> 
                         <p className="mb-2">Контакти:</p>
                         <p>+380735072831</p>
-                        <a href = "mailto: aperturatrade@gmail.com">aperturatrade@gmail.com</a>
+                        <a href = "mailto: apertura@gmail.com">aperturatrade@gmail.com</a>
                         <p>смт. Ворзель, вул. Яблунська 11а</p>
                     </div>
                 </div>

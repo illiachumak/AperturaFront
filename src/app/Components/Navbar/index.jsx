@@ -42,7 +42,7 @@ export default function Navbar() {
               <li><p className="pl-4 hover:text-yellow-500 mx-3 text-[13px] cursor-pointer" onClick={() => {
                 navigator.clipboard.writeText('+3800974154321')
                 alert("Номер скопійовано!")
-                }}>+3800974154321</p></li>
+                }}>+380974154321</p></li>
               <li><div className="pl-4 hover:text-yellow-500 mx-3 text-[13px] cursor-pointer"
               onClick={()=> dispatch(openCart())}>Корзина</div></li>
             </ul>
