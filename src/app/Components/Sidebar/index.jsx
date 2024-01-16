@@ -90,7 +90,7 @@ const renderSubcategories = (subcategories, depth = 1) => (
             className={`relative text-left pl-8 w-full py-3 ${
               (subcategory?.subcategories && subcategory.subcategories.length > 0) ? 'rounded-b-xs' : ''
             } ${
-              openCategories.includes(subcategory.id) || category === subcategory.id ? 'bg-active-subcategory-prim1' : ''
+              openCategories.includes(subcategory.id) || category == subcategory.id ? 'bg-active-subcategory-prim1' : ''
             }`}
             
             onClick={() => handleSubcategoryClick(subcategory.id)}
