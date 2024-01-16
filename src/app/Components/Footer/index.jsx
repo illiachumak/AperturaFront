@@ -21,9 +21,9 @@ export default function Footer() {
                     <h2 className="items-end flex max-[550px]:hidden     ">All right reserved</h2>
                     <div className="w-230 text-sm content-center flex flex-col gap-2 text-right"> 
                         <p className="mb-2">Контакти:</p>
-                        <p>+380123456789</p>
-                        <a href = "mailto: apertura@gmail.com">apertura@gmail.com</a>
-                        <p>м.Львів вул.Чорновола 44</p>
+                        <p>+380735072831</p>
+                        <a href = "mailto: aperturatrade@gmail.com">aperturatrade@gmail.com</a>
+                        <p>смт. Ворзель, вул. Яблунська 11а</p>
                     </div>
                 </div>
                 </div>

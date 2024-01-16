@@ -71,7 +71,7 @@ function Shop({ params }) {
 
   return (
     <>
-    {/* <Loading/> */}
+    <Loading/>
       <div className="responsive-container body-container my-10">
         <div className="flex justify-between items-center w-full mb-8">
           <h2 className="block font-bold text-[20px] max-[783px]:hidden">{mainCategory?.name}</h2>
