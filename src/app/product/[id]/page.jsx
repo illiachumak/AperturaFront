@@ -127,7 +127,7 @@ export default function Shop({ params }) {
         <div className='relative'>
         {!selectedColor.image && (
           <div className='relative image-container rounded-[5px] max-[640px]:basis-[50%]'>
-          <Image
+          {!selectedColor.image &&<Image
             priority={true}
             src={data?.image_preview}
             alt=""
@@ -137,7 +137,7 @@ export default function Shop({ params }) {
               setTimeout(()=>{dispatch(setLoading(false))}, 200) 
               setLoaded(true)}}
             className={`image-container object-cover max-h-[500px] h-auto rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
-          />
+          />}
           {!loaded && (
             <Skeleton
               sx={{ bgcolor: 'grey.100' }}
@@ -151,9 +151,9 @@ export default function Shop({ params }) {
         )}
           {selectedColor.image && (
             <div className='image-container  rounded-[5px] max-[640px]:basis-[50%]'>
-            <Image
+            {selectedColor.image && <Image
               priority={true}
-              src={`${selectedColor?.image ? selectedColor?.image : data?.image_preview}`}
+              src={`${selectedColor?.image}`}
               alt=""
               width={300}
               height={500}
@@ -162,6 +162,7 @@ export default function Shop({ params }) {
                 setLoaded(true)}}
               className={`image-container object-cover max-h-[500px] h-auto rounded-[5px] max-[640px]:basis-[50%] ${loaded ? "opacity-1" : "opacity-0"} `}
             />
+            }
             {!loaded && (
               <Skeleton
                 sx={{ bgcolor: 'grey.100' }}
