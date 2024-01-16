@@ -1,23 +1,35 @@
-# Use the official Node.js image as a base image
-FROM  node:18-alpine
-
-# Set the working directory in the container
-WORKDIR /app 
-
-# Copy package.json and package-lock.json to the container
+FROM node:18-alpine as base
+RUN apk add --no-cache g++ make py3-pip libc6-compat
+WORKDIR /app
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the entire app directory to the container
-COPY . .
-
-# Build the Next.js app
-RUN npm run build
-
-# Expose the port that the app will run on
 EXPOSE 80
 
-# Set the command to run your app
-CMD ["npm", "start"]
+FROM base as builder
+WORKDIR /app
+COPY . .
+RUN npm run build
+
+
+FROM base as production
+WORKDIR /app
+
+ENV NODE_ENV=production
+RUN npm ci
+
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+USER nextjs
+
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/public ./public
+
+CMD npm start
+
+FROM base as dev
+ENV NODE_ENV=development
+RUN npm install 
+COPY . .
+CMD npm run dev
