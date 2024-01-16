@@ -7,18 +7,21 @@ import arrDown from '../../assets/shop/ardown.svg';
 
 export const findCategoryForSubcategory = (categories, subcategoryId) =>  {
   function findRecursive(category, targetId) {
-    const foundSubcategory = category.subcategories.find((sub) => sub.id == targetId);
+    const foundSubcategory = category.subcategories && category.subcategories.find((sub) => sub.id == targetId);
 
     if (foundSubcategory) {
       return category;
     }
 
-    for (const subcategory of category.subcategories) {
-      const result = findRecursive(subcategory, targetId);
-      if (result) {
-        return result;
+    if (Array.isArray(category.subcategories)) {
+      for (const subcategory of category.subcategories) {
+        const result = findRecursive(subcategory, targetId);
+        if (result) {
+          return result;
+        }
       }
     }
+    
 
     return null;
   }
@@ -84,13 +87,16 @@ const renderSubcategories = (subcategories, depth = 1) => (
       {subcategories.map((subcategory) => (
         <li key={subcategory.id}>
           <button
-            className={` relative text-left pl-8 w-full py-3 ${subcategory?.subcategories.length < 0 && 'rounded-b-xs'} ${
-              openCategories.includes(subcategory.id) || category == subcategory.id ? 'bg-active-subcategory-prim1' : ''
+            className={`relative text-left pl-8 w-full py-3 ${
+              (subcategory?.subcategories && subcategory.subcategories.length > 0) ? 'rounded-b-xs' : ''
+            } ${
+              openCategories.includes(subcategory.id) || category === subcategory.id ? 'bg-active-subcategory-prim1' : ''
             }`}
+            
             onClick={() => handleSubcategoryClick(subcategory.id)}
           >
             {subcategory.name}
-          {subcategory.subcategories.length > 0 && (
+            {subcategory.subcategories && subcategory.subcategories.length > 0 && (
                 <Image
                   src={arrDown}
                   alt=''
