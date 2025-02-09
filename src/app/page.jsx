@@ -13,6 +13,7 @@ import Loading from "./Components/Loading"
 export default async function Home() {
 
   const categories  = await getCategories()
+  console.log(categories)
   return (
     <>
       <main className="!pt-12 max-[750px]:!pt-4 responsive-container flex flex-col justify-between items-center">

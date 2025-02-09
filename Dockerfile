@@ -1,23 +1,50 @@
-# Use the official Node.js image as a base image
-FROM  node:18-alpine
+FROM node:22-alpine AS base
 
-# Set the working directory in the container
-WORKDIR /app 
+# Install pnpm globally
+RUN npm install -g pnpm
 
-# Copy package.json and package-lock.json to the container
-COPY package*.json ./
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and pnpm-lock.yaml to install dependencies first
+COPY package.json ./
 
 # Install dependencies
-RUN npm install
+RUN pnpm install
 
-# Copy the entire app directory to the container
+
+FROM base AS builder
+
+# Copy the rest of the application files
 COPY . .
 
-# Build the Next.js app 
-RUN npm run build
+# Build the application
+RUN pnpm run build
 
-# Expose the port that the app will run on
-EXPOSE 80
+FROM node:22-alpine AS runner
 
-# Set the command to run your app
-CMD ["npm", "start"]
+# Install pnpm in the runner stage
+RUN npm install -g pnpm
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the necessary files from the builder stage for the standalone build
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/static .next/static
+
+# Change ownership of the files to the node user
+RUN chown -R node:node /app
+
+# Switch to the non-root user
+USER node
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

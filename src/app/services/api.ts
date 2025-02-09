@@ -14,6 +14,6 @@ export const getCategories = async () => {
 
         throw new Error('Request Failed');
     }
-
+    
     return response.json();
 };
